@@ -17,3 +17,8 @@ room_type varchar,
 occupancy varchar,
 Parking_availability varchar,
 )
+#Photo table 
+create table photo (
+owner_id number foreign key(owner_id) reference room(room_id),
+photo varchar not null # link of the photo 
+)
