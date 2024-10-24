@@ -1,0 +1,9 @@
+#user table
+create table user(
+    Name varchar(20) not null,
+    mobile number(13) primary key,
+    Email varchar(20) not null,
+    Password varchar(20) not null,
+    gender varcahr(1) not null check(gender in('M','F','T'))
+    Role varchar(7) not null check(Role in('Owner','Renter'))
+)
