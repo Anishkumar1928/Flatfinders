@@ -1,24 +1,38 @@
-#user table
-create table user(
-    Name varchar(20) not null,
-    mobile number(13) primary key,
-    Email varchar(20) not null,
-    Password varchar(20) not null,
-    gender varcahr(1) not null check(gender in('M','F','T'))
-    Role varchar(7) not null check(Role in('Owner','Renter'))
-)
+-- User Table
+CREATE TABLE user (
+    user_id SERIAL PRIMARY KEY,  
+    name VARCHAR(50) NOT NULL,  
+    mobile BIGINT UNIQUE NOT NULL, 
+    email VARCHAR(100) NOT NULL UNIQUE, 
+    password VARCHAR(128) NOT NULL, 
+    gender CHAR(1) NOT NULL CHECK (gender IN ('M', 'F', 'T')),
+    role VARCHAR(7) NOT NULL CHECK (role IN ('Owner', 'Renter'))
+);
 
-# Room table
-create table Room(
-Room_id number foreign key(room_id)               reference user(mobile),
-rent decimal not null,
-dimensions decimal not null,
-room_type varchar,
-occupancy varchar,
-Parking_availability varchar,
-)
-#Photo table 
-create table photo (
-owner_id number foreign key(owner_id) reference room(room_id),
-photo varchar not null # link of the photo 
-)
+-- Property Table
+CREATE TABLE property (
+    property_id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    property_type VARCHAR(4) NOT NULL CHECK (property_type IN ('Flat', 'Room')),
+    rent DECIMAL(10, 2) NOT NULL,
+    dimensions DECIMAL(10, 2) NOT NULL,
+    accomodation VARCHAR(20) CHECK (accomodation IN ('OnlyGirls', 'OnlyBoys', 'OnlyFamily', 'FamilyAndGirls', 'Both')),
+    is_occupancy BOOLEAN NOT NULL,
+    is_parking BOOLEAN NOT NULL,
+    is_kitchen BOOLEAN NOT NULL,
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES user (user_id) 
+        ON DELETE CASCADE 
+);
+
+-- Photo Table
+CREATE TABLE photo (
+    photo_id SERIAL PRIMARY KEY, -- Auto-increment ID for photos
+    photo_type VARCHAR(20) NOT NULL CHECK (photo_type IN ('Profile_pic', 'Property_pic')),
+    photo_id_link TEXT NOT NULL,
+    user_id INTEGER,
+    property_id INTEGER,
+    CONSTRAINT fk_user_photo FOREIGN KEY (user_id) REFERENCES user (user_id) 
+        ON DELETE CASCADE, 
+    CONSTRAINT fk_property_photo FOREIGN KEY (property_id) REFERENCES property (property_id) 
+        ON DELETE CASCADE 
+);
