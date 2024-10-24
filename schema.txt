@@ -7,3 +7,13 @@ create table user(
     gender varcahr(1) not null check(gender in('M','F','T'))
     Role varchar(7) not null check(Role in('Owner','Renter'))
 )
+
+# Room table
+create table Room(
+Room_id number foreign key(room_id)               reference user(mobile),
+rent decimal not null,
+dimensions decimal not null,
+room_type varchar,
+occupancy varchar,
+Parking_availability varchar,
+)
