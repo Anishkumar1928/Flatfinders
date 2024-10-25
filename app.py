@@ -54,7 +54,7 @@ def login():
     user = db.read_user(mobile) 
     print(user)  # Assume mobile is unique
 
-    if user and user[4]==password:  # Check hashed password
+    if user and check_password_hash(user[4],password):  # Check hashed password
         # Create JWT token
         access_token = create_access_token(identity=user)
         return jsonify(access_token=access_token), 200
@@ -116,3 +116,4 @@ def protected():
     current_user = get_jwt_identity()
     return jsonify(logged_in_as=current_user), 200
 
+app.run()

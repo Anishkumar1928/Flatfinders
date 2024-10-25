@@ -1,7 +1,7 @@
 import sqlite3
 
 # Connect to the database (or create it if it doesn't exist)
-conn = sqlite3.connect('rental_app.db')
+conn = sqlite3.connect('./tmp/rental_app.db')
 cursor = conn.cursor()
 
 # Create User Table

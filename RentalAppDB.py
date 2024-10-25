@@ -1,7 +1,7 @@
 import sqlite3
 
 class RentalAppDB:
-    def __init__(self, db_name='rental_app.db'):
+    def __init__(self, db_name='./tmp/rental_app.db'):
         self.db = db_name
         self.create_tables()
 
