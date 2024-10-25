@@ -22,6 +22,8 @@ CREATE TABLE property (
     is_kitchen BOOLEAN NOT NULL,
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES user (user_id) 
         ON DELETE CASCADE 
+    Pin_code number(6) not null,
+    Address varchar()  not null
 );
 
 -- Photo Table
