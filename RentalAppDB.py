@@ -1,7 +1,7 @@
 import sqlite3
 
 class RentalAppDB:
-    def __init__(self, db_name='./tmp/rental_app.db'):
+    def __init__(self, db_name='rental_app.db'):
         self.db = db_name
         self.create_tables()
 
@@ -31,7 +31,7 @@ class RentalAppDB:
                     address TEXT NOT NULL,
                     Pin_Code INTEGER NOT NULL,
                     dimensions REAL NOT NULL,
-                    accommodation TEXT CHECK (accommodation IN 
+                    accommodation TEXT CHECK (accommodation IN
                         ('OnlyGirls', 'OnlyBoys', 'OnlyFamily', 'FamilyAndGirls', 'Both')) NOT NULL,
                     is_occupancy BOOLEAN NOT NULL,
                     is_parking BOOLEAN NOT NULL,
@@ -68,13 +68,13 @@ class RentalAppDB:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM user WHERE mobile = ?;", (mobile,))
             return cursor.fetchone()
-        
+
     def update_user(self, user_id, changes):
         with sqlite3.connect(self.db) as conn:
             cursor = conn.cursor()
             query = "UPDATE user SET "
             params = []
-            
+
             # Prepare the fields to update based on the provided changes
             fields_to_update = []
             for field, value in changes.items():
