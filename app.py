@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
+from firebase import upload_profile_pic
 
 app = Flask(__name__)
 
@@ -20,28 +21,43 @@ def home():
 # Create a route to authenticate your users and return JWTs.
 @app.route("/signup", methods=["POST"])
 def signup():
-    data = request.get_json()
-    name = data.get("name")
-    mobile = data.get("mobile")
-    email = data.get("email")
-    password = data.get("password")
-    gender = data.get("gender")
-    role = data.get("role")
+    try:
+        # Get form data
+        name = request.form.get("name")
+        mobile = request.form.get("mobile")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        gender = request.form.get("gender")
+        role = request.form.get("role")
+        profile_pic = request.files.get("file")
 
-    # Check if user already exists
-    existing_user = db.read_user(mobile)  # Assume mobile is unique for simplicity
-    if existing_user:
-        return jsonify({"msg": "User already exists."}), 400
+        # Check if user already exists
+        existing_user = db.read_user(mobile)
+        if existing_user:
+            return jsonify({"msg": "User already exists."}), 400
 
-    # Hash the password before storing it
-    hashed_password = generate_password_hash(password)
+        # Upload profile picture if provided
+        profile_pic_url = None
+        if profile_pic:
+            profile_pic_url = upload_profile_pic(profile_pic, mobile)
 
-    # Create a new user
-    db.create_user(name, mobile, email, hashed_password, gender, role)
+        # Hash the password
+        hashed_password = generate_password_hash(password)
 
-    # Create JWT token
-    access_token = create_access_token(identity=mobile)
-    return jsonify(access_token=access_token), 201
+        # Create user
+        db.create_user(name, mobile, email, hashed_password, gender, role)
+        
+        # Store profile picture URL
+        if profile_pic_url:
+            db.create_user_profile_pic(mobile, profile_pic_url)
+
+        # Create JWT token
+        access_token = create_access_token(identity=mobile)
+        return jsonify({"access_token": access_token, "profile_pic_url": profile_pic_url}), 201
+
+    except Exception as e:
+        print(f"Signup error: {e}")
+        return jsonify({"msg": "An error occurred during signup"}), 500
 
 
 @app.route("/login", methods=["POST"])
