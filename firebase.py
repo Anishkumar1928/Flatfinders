@@ -51,6 +51,6 @@ def delete_pic(storage_path):
 if __name__ == "__main__":
     # print(storage.child("yoyo").child("yoyo.jpeg").put("yoyo.jpeg"))
     #storage.delete("yoyo/yoyo.jpeg", None)
-    # print(upload_pic("yoyo.jpeg","yoyo","12i4"))
+    print(upload_pic("yoyo.jpeg","yoyo","12i4"))
     # delete_pic("12i4.jpg")
     # print(os.getcwd())
