@@ -1,4 +1,5 @@
 import pyrebase
+import os
 # Firebase configuration
 config = {
     "apiKey": "AIzaSyDM3OwPc2E1ArPz3bK3gUJY-vSUWrfIQcs",
@@ -8,7 +9,7 @@ config = {
     "messagingSenderId": "900610869951",
     "appId": "1:900610869951:web:9513bb6a17e23b417ed40a",
     "databaseURL": "",
-    "serviceAccount": "serviceAccountKey.json"
+    "serviceAccount": os.path.join(os.getcwd(), "serviceAccountKey.json")
 }
 
 # Initialize Firebase
@@ -50,5 +51,6 @@ def delete_pic(storage_path):
 if __name__ == "__main__":
     # print(storage.child("yoyo").child("yoyo.jpeg").put("yoyo.jpeg"))
     #storage.delete("yoyo/yoyo.jpeg", None)
-    # print(upload_pic("yoyo.jpeg","12i4"))
-    delete_pic("12i4.jpg")
+    # print(upload_pic("yoyo.jpeg","yoyo","12i4"))
+    # delete_pic("12i4.jpg")
+    # print(os.getcwd())
