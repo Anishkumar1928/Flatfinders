@@ -1,18 +1,17 @@
 import pyrebase
 from datetime import datetime
 import os
-from dotenv import load_dotenv
+
 
 # Load environment variables from .env file
-load_dotenv()
 
 config = {
-    "apiKey": os.getenv("FIREBASE_API_KEY"),
-    "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
-    "projectId": os.getenv("FIREBASE_PROJECT_ID"),
-    "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET"),
-    "messagingSenderId": os.getenv("FIREBASE_MESSAGING_SENDER_ID"),
-    "appId": os.getenv("FIREBASE_APP_ID"),
+    "apiKey": "AIzaSyDM3OwPc2E1ArPz3bK3gUJY-vSUWrfIQcs",
+    "authDomain": "flatfinders-3afb3.firebaseapp.com",
+    "projectId": "flatfinders-3afb3",
+    "storageBucket":"flatfinders-3afb3.appspot.com",
+    "messagingSenderId": "900610869951",
+    "appId":"1:900610869951:web:9513bb6a17e23b417ed40a",
     "databaseURL": ""
 }
 
@@ -85,3 +84,4 @@ def delete_room_photo(image_url):
         print(f"Error deleting room photo: {str(e)}")
         return False
 
+print(config)
