@@ -1,87 +1,54 @@
 import pyrebase
-from datetime import datetime
-import os
-
-
-# Load environment variables from .env file
-
+# Firebase configuration
 config = {
     "apiKey": "AIzaSyDM3OwPc2E1ArPz3bK3gUJY-vSUWrfIQcs",
     "authDomain": "flatfinders-3afb3.firebaseapp.com",
     "projectId": "flatfinders-3afb3",
-    "storageBucket":"flatfinders-3afb3.appspot.com",
+    "storageBucket": "flatfinders-3afb3.appspot.com",
     "messagingSenderId": "900610869951",
-    "appId":"1:900610869951:web:9513bb6a17e23b417ed40a",
-    "databaseURL": ""
+    "appId": "1:900610869951:web:9513bb6a17e23b417ed40a",
+    "databaseURL": "",
+    "serviceAccount": "serviceAccountKey.json"
 }
 
+# Initialize Firebase
 firebase = pyrebase.initialize_app(config)
+auth = firebase.auth()
 storage = firebase.storage()
 
-def upload_profile_pic(image_file, user_id):
+# Function to upload a profile picture to Firebase Storage
+def upload_pic(image_file, type,name):
     try:
-        # Generate unique filename using timestamp
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        filename = f"profile_pics/{user_id}_{timestamp}.jpg"
-        
-        # Upload file to Firebase Storage
-        storage.child(filename).put(image_file)
-        
-        # Get the URL of uploaded file
-        image_url = storage.child(filename).get_url(None)
-        print(f"Image uploaded successfully for user {user_id}: {image_url}")
-        return image_url
+        # Generate unique filename
+        filename = f"{type}/{name}.jpg"
 
+        # Upload the file to Firebase Storage
+        storage.child(filename).put(image_file, token=None)
+
+        # Get the URL of the uploaded file
+        image_url = storage.child(filename).get_url(token=None)
+        print(f"Image uploaded successfully for user {name}: {image_url}")
+        return {"status": "success", "url": image_url}
     except Exception as e:
-        print(f"Error uploading image for user {user_id}: {str(e)}")
-        return None
+        error_msg = f"Error uploading image for user {name}: {str(e)}"
+        print(error_msg)
+        return {"status": "error", "message": error_msg}
 
-
-def delete_profile_pic(image_url):
+# Function to delete a profile picture from Firebase Storage
+def delete_pic(storage_path):
     try:
-        # Extract filename from URL
-        filename = image_url.split('/')[-1].split('?')[0]
-        
-        # Delete file from Firebase Storage
-        storage.delete(f"profile_pics/{filename}")
+        storage.delete(storage_path, None)
+        print(f"Image deleted successfully from path: {storage_path}")
         return True
-        
     except Exception as e:
-        print(f"Error deleting image: {str(e)}")
+        print(f"Error deleting image: {e}")
         return False
 
-def upload_room_photos(room_id, image_files):
-    try:
-        image_urls = []
-        for image_file in image_files:
-            # Generate unique filename using timestamp
-            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-            filename = f"room_photos/{room_id}_{timestamp}.jpg"
-            
-            # Upload file to Firebase Storage
-            storage.child(filename).put(image_file)
-            
-            # Get the URL of uploaded file
-            image_url = storage.child(filename).get_url(None)
-            image_urls.append(image_url)
-            
-        return image_urls
-        
-    except Exception as e:
-        print(f"Error uploading room photos: {str(e)}")
-        return None
 
-def delete_room_photo(image_url):
-    try:
-        # Extract filename from URL
-        filename = image_url.split('/')[-1].split('?')[0]
-        
-        # Delete file from Firebase Storage
-        storage.delete(f"room_photos/{filename}")
-        return True
-        
-    except Exception as e:
-        print(f"Error deleting room photo: {str(e)}")
-        return False
 
-print(config)
+# Example usage
+if __name__ == "__main__":
+    # print(storage.child("yoyo").child("yoyo.jpeg").put("yoyo.jpeg"))
+    #storage.delete("yoyo/yoyo.jpeg", None)
+    # print(upload_pic("yoyo.jpeg","12i4"))
+    delete_pic("12i4.jpg")

@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
-from firebase import upload_profile_pic
+from firebase import upload_pic,delete_pic
 
 app = Flask(__name__)
 
@@ -39,7 +39,7 @@ def signup():
         # Upload profile picture if provided
         profile_pic_url = None
         if profile_pic:
-            profile_pic_url = upload_profile_pic(profile_pic, mobile)
+            profile_pic_url = upload_pic(profile_pic,"profile_pic",mobile)
 
         # Hash the password
         hashed_password = generate_password_hash(password)
