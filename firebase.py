@@ -18,13 +18,16 @@ auth = firebase.auth()
 storage = firebase.storage()
 
 # Function to upload a profile picture to Firebase Storage
-def upload_pic(image_file, type,name):
+def upload_pic(image_file, type, name):
     try:
         # Generate unique filename
         filename = f"{type}/{name}.jpg"
-
+        
+        # Read the image file into bytes
+        image_data = image_file.read()  # Read the file content as bytes
+        
         # Upload the file to Firebase Storage
-        storage.child(filename).put(image_file, token=None)
+        storage.child(filename).put(image_data, token=None)
 
         # Get the URL of the uploaded file
         image_url = storage.child(filename).get_url(token=None)
@@ -34,6 +37,7 @@ def upload_pic(image_file, type,name):
         error_msg = f"Error uploading image for user {name}: {str(e)}"
         print(error_msg)
         return {"status": "error", "message": error_msg}
+
 
 # Function to delete a profile picture from Firebase Storage
 def delete_pic(storage_path):

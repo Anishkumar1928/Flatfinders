@@ -39,7 +39,10 @@ def signup():
         # Upload profile picture if provided
         profile_pic_url = None
         if profile_pic:
-            profile_pic_url = upload_pic(profile_pic,"profile_pic",mobile)
+            result = upload_pic(profile_pic, "profile_pic", mobile)
+            if result["status"] == "error":
+                return jsonify({"msg": result["message"]}), 400
+            profile_pic_url = result["url"]
 
         # Hash the password
         hashed_password = generate_password_hash(password)
@@ -131,3 +134,6 @@ def protected():
     # Access the identity of the current user with get_jwt_identity
     current_user = get_jwt_identity()
     return jsonify(logged_in_as=current_user), 200
+
+
+app.run(debug=True,port=8000)
