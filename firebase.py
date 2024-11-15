@@ -19,7 +19,7 @@ config = {
 firebase = pyrebase.initialize_app(config)
 storage = firebase.storage()
 
-def upload_profile_pic(user_id, image_file):
+def upload_profile_pic(image_file,user_id):
     try:
         # Generate unique filename using timestamp
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
