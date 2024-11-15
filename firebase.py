@@ -19,7 +19,7 @@ config = {
 firebase = pyrebase.initialize_app(config)
 storage = firebase.storage()
 
-def upload_profile_pic(image_file,user_id):
+def upload_profile_pic(image_file, user_id):
     try:
         # Generate unique filename using timestamp
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -30,12 +30,13 @@ def upload_profile_pic(image_file,user_id):
         
         # Get the URL of uploaded file
         image_url = storage.child(filename).get_url(None)
-        
+        print(f"Image uploaded successfully for user {user_id}: {image_url}")
         return image_url
-        
+
     except Exception as e:
-        print(f"Error uploading image: {str(e)}")
+        print(f"Error uploading image for user {user_id}: {str(e)}")
         return None
+
 
 def delete_profile_pic(image_url):
     try:

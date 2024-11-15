@@ -159,12 +159,17 @@ class RentalAppDB:
 
     # User Profile Picture CRUD Operations
     def create_user_profile_pic(self, user_id, photo_id_link):
-        with sqlite3.connect(self.db) as conn:
-            cursor = conn.cursor()
-            cursor.execute("""
-                INSERT INTO photo (photo_type, photo_id_link, user_id)
-                VALUES ('Profile_pic', ?, ?);
-            """, (photo_id_link, user_id))
+        try:
+            with sqlite3.connect(self.db) as conn:
+                cursor = conn.cursor()
+                cursor.execute("""
+                    INSERT INTO photo (photo_type, photo_id_link, user_id)
+                    VALUES ('Profile_pic', ?, ?);
+                """, (photo_id_link, user_id))
+                print(f"Profile picture for user {user_id} added successfully.")
+        except sqlite3.Error as e:
+            print(f"Error inserting profile picture for user {user_id}: {str(e)}")
+
 
     def read_user_profile_pic(self, user_id):
         with sqlite3.connect(self.db) as conn:
