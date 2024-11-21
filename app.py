@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
+from firebase import upload_pic,delete_pic
 
 
 app = Flask(__name__)
@@ -38,12 +39,11 @@ def signup():
 
         # Upload profile picture if provided
         profile_pic_url = None
-        # if profile_pic:
-
-        #     # result = upload_pic(profile_pic, "profile_pic", mobile)
-        #     if result["status"] == "error":
-        #         return jsonify({"msg": result["message"]}), 400
-        #     profile_pic_url = result["url"]
+        if profile_pic:
+            result = upload_pic(profile_pic, "profile_pic", mobile)
+            if result["status"] == "error":
+                return jsonify({"msg": result["message"]}), 400
+            profile_pic_url = result["url"]
 
         # Hash the password
         hashed_password = generate_password_hash(password)
@@ -134,10 +134,12 @@ def delete_user():
 def protected():
     # Access the identity of the current user with get_jwt_identity
     current_user = get_jwt_identity()
+    profilpic=db.read_user_profile_pic(current_user[0])
+    current_user.append(profilpic)
     return jsonify(logged_in_as=current_user), 200
 
-if __name__=='__main__':
-    app.run(debug=True)
+# if __name__=='__main__':
+#     app.run(debug=True)
 
 
 
