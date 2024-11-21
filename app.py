@@ -50,10 +50,11 @@ def signup():
 
         # Create user
         db.create_user(name, mobile, email, hashed_password, gender, role)
+        current_user=db.read_user(mobile)
         
         # Store profile picture URL
         if profile_pic_url:
-            db.create_user_profile_pic(mobile, profile_pic_url)
+            db.create_user_profile_pic(current_user[0], profile_pic_url)
 
         # Create JWT token
         access_token = create_access_token(identity=mobile)
