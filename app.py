@@ -135,7 +135,7 @@ def protected():
     # Access the identity of the current user with get_jwt_identity
     current_user = get_jwt_identity()
     profilpic=db.read_user_profile_pic(current_user[0])
-    current_user.append(profilpic)
+    print(profilpic)
     return jsonify(logged_in_as=current_user), 200
 
 # if __name__=='__main__':
