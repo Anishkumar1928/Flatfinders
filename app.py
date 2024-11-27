@@ -112,8 +112,7 @@ def update_profile():
         "role": data.get("role")
     }
     print(user[0])
-
-    db.update_user(user[0], changes)  # Assuming user[0] is the user_id
+    db.update_user(user[0],data)  # Assuming user[0] is the user_id
     return jsonify({"msg": "Profile updated successfully."}), 200
 
 @app.route("/delete_user", methods=["DELETE"])
