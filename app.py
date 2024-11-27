@@ -95,6 +95,7 @@ def update_profile():
 
     data = request.form.to_dict()
     print(data)
+    print(user)
 
     # Handle profile picture upload
     profile_pic = request.files.get('file')
@@ -110,6 +111,7 @@ def update_profile():
         "gender": data.get("gender"),
         "role": data.get("role")
     }
+    print(user[0])
 
     db.update_user(user[0], changes)  # Assuming user[0] is the user_id
     return jsonify({"msg": "Profile updated successfully."}), 200
