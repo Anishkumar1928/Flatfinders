@@ -87,7 +87,7 @@ def login():
 @app.route("/update_profile", methods=["PUT"])
 @jwt_required()
 def update_profile():
-    # Get the current fxkgjrof user's mobile from the JWT identity
+    # Get the current user's mobile from the JWT identity
     current_user = get_jwt_identity()
     print(current_user)
     user = db.read_user(current_user[2])
