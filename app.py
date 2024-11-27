@@ -87,28 +87,30 @@ def login():
 @app.route("/update_profile", methods=["PUT"])
 @jwt_required()
 def update_profile():
-    # Get the current user's mobile from the JWT identity
     current_user = get_jwt_identity()
-    print(current_user)
-    user = db.read_user(current_user[2])
+    user = db.read_user(current_user[2])  # Assuming user_id is the third item in JWT identity
     
     if not user:
         return jsonify({"msg": "User not found."}), 404
 
-    data = request.get_json()
+    data = request.form.to_dict()
 
-    # Create a dictionary for changes
+    # Handle profile picture upload
+    profile_pic = request.files.get('file')
+    if profile_pic:
+        filepath = upload_pic(profile_pic, "profile_pic", current_user[2])
+        data['profile_pic'] = filepath  # Save image path in the database
+
+    # Update the user profile
     changes = {
         "name": data.get("name"),
         "mobile": data.get("mobile"),
         "email": data.get("email"),
-        "password": generate_password_hash(data.get("password")) if data.get("password") else None,
         "gender": data.get("gender"),
         "role": data.get("role")
     }
 
-    # Update user profile
-    db.update_user(user[0], changes)  # user[0] is the user_id
+    db.update_user(user[0], changes)  # Assuming user[0] is the user_id
     return jsonify({"msg": "Profile updated successfully."}), 200
 
 @app.route("/delete_user", methods=["DELETE"])
