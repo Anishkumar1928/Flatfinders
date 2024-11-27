@@ -139,8 +139,9 @@ def delete_user():
 def protected():
     # Access the identity of the current user with get_jwt_identity
     current_user = get_jwt_identity()
+    user = db.read_user(current_user[2])
     profilpic=db.read_user_profile_pic(current_user[0])
-    return jsonify(logged_in_as=current_user,profilpic=profilpic), 200
+    return jsonify(logged_in_as=user,profilpic=profilpic), 200
 
 # if __name__=='__main__':
 #     app.run(debug=True)
