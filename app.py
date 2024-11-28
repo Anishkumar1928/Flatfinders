@@ -101,16 +101,7 @@ def update_profile():
     profile_pic = request.files.get('file')
     if profile_pic:
         filepath = upload_pic(profile_pic, "profile_pic", current_user[2])
-        data['profile_pic'] = filepath  # Save image path in the database
-
-    # Update the user profile
-    changes = {
-        "name": data.get("name"),
-        "mobile": data.get("mobile"),
-        "email": data.get("email"),
-        "gender": data.get("gender"),
-        "role": data.get("role")
-    }
+        db.update_user_profile_pic(user[0],filepath)
     print(user[0])
     db.update_user(user[0],data)  # Assuming user[0] is the user_id
     return jsonify({"msg": "Profile updated successfully."}), 200
