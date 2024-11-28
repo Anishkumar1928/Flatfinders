@@ -88,7 +88,8 @@ def login():
 @jwt_required()
 def update_profile():
     current_user = get_jwt_identity()
-    user = db.read_user(current_user[0])  # Assuming user_id is the third item in JWT identity
+     # Assuming user_id is the third item in JWT identity
+    user = db.read_user(current_user[0]) 
     
     if not user:
         return jsonify({"msg": "User not found."}), 404
@@ -99,11 +100,13 @@ def update_profile():
 
     # Handle profile picture upload
     profile_pic = request.files.get('file')
-    if profile_pic:
-        filepath = upload_pic(profile_pic, "profile_pic", current_user[2])
-        db.update_user_profile_pic(user[0],filepath)
+   
     print(user[0])
-    db.update_user(user[0],data)  # Assuming user[0] is the user_id
+    db.update_user(current_user[0],data) 
+    user = db.read_user(current_user[0]) 
+    if profile_pic:
+        filepath = upload_pic(profile_pic, "profile_pic", user[2])
+        db.update_user_profile_pic(user[0],filepath) # Assuming user[0] is the user_id
     return jsonify({"msg": "Profile updated successfully."}), 200
 
 @app.route("/delete_user", methods=["DELETE"])
