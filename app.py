@@ -135,8 +135,6 @@ def protected():
     profilpic=f'https://firebasestorage.googleapis.com/v0/b/flatfinders-3afb3.appspot.com/o/profile_pic%2F{current_user[0]}.jpg?alt=media'
     return jsonify(logged_in_as=user,profilpic=profilpic), 200
 
-# if __name__=='__main__':
-#     app.run(debug=True)
 
 
 
