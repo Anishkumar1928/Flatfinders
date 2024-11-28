@@ -132,7 +132,7 @@ def protected():
     current_user = get_jwt_identity()
     # print(current_user)
     user = db.read_user(current_user[0])
-    profilpic=db.read_user_profile_pic(current_user[0])
+    profilpic=f'https://firebasestorage.googleapis.com/v0/b/flatfinders-3afb3.appspot.com/o/profile_pic%2F{current_user[0]}.jpg?alt=media'
     return jsonify(logged_in_as=user,profilpic=profilpic), 200
 
 # if __name__=='__main__':
