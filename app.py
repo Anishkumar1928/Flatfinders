@@ -33,7 +33,7 @@ def signup():
         profile_pic = request.files.get("file")
 
         # Check if user already exists
-        existing_user = db.read_user(mobile)
+        existing_user = db.read_user_mobile(mobile)
         if existing_user:
             return jsonify({"msg": "User already exists."}), 400
 
@@ -72,7 +72,7 @@ def login():
     password = data.get("password")
 
     # Get user by mobile
-    user = db.read_user(mobile) 
+    user = db.read_user_mobile(mobile) 
     print(user)  # Assume mobile is unique
 
     if user and check_password_hash(user[4],password):  # Check hashed password
@@ -88,7 +88,7 @@ def login():
 @jwt_required()
 def update_profile():
     current_user = get_jwt_identity()
-    user = db.read_user(current_user[2])  # Assuming user_id is the third item in JWT identity
+    user = db.read_user(current_user[0])  # Assuming user_id is the third item in JWT identity
     
     if not user:
         return jsonify({"msg": "User not found."}), 404
@@ -120,13 +120,8 @@ def update_profile():
 def delete_user():
     # Get the current user's mobile from the JWT identity
     current_user = get_jwt_identity()
-    user = db.read_user(current_user[2])
-
-    if not user:
-        return jsonify({"msg": "User not found."}), 404
-
     # Delete the user from the database
-    db.delete_user(user[0])  # user[0] is the user_id
+    db.delete_user(current_user[0])  # user[0] is the user_id
     return jsonify({"msg": "User deleted successfully."}), 200
 
 
@@ -139,8 +134,8 @@ def delete_user():
 def protected():
     # Access the identity of the current user with get_jwt_identity
     current_user = get_jwt_identity()
-    print(current_user)
-    user = db.read_user(current_user[2])
+    # print(current_user)
+    user = db.read_user(current_user[0])
     profilpic=db.read_user_profile_pic(current_user[0])
     return jsonify(logged_in_as=user,profilpic=profilpic), 200
 

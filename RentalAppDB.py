@@ -19,7 +19,17 @@ class RentalAppDB:
             print(f"Error creating user: {e}")
             self.connection.rollback()
 
-    def read_user(self, mobile):
+    def read_user(self, userid):
+        try:
+            with self.connection.cursor() as cursor:
+                cursor.execute('SELECT * FROM "user" WHERE "user_id" = %s;', (userid,))
+                return cursor.fetchone()
+        except psycopg2.Error as e:
+            print(f"Error reading user: {e}")
+            self.connection.rollback()
+            return None
+        
+    def read_user_mobile(self, mobile):
         try:
             with self.connection.cursor() as cursor:
                 cursor.execute('SELECT * FROM "user" WHERE "mobile" = %s;', (mobile,))
