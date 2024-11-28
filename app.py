@@ -37,20 +37,22 @@ def signup():
         if existing_user:
             return jsonify({"msg": "User already exists."}), 400
 
-        # Upload profile picture if provided
-        profile_pic_url = None
-        if profile_pic:
-            result = upload_pic(profile_pic, "profile_pic", mobile)
-            if result["status"] == "error":
-                return jsonify({"msg": result["message"]}), 400
-            profile_pic_url = result["url"]
+
+
 
         # Hash the password
         hashed_password = generate_password_hash(password)
 
         # Create user
         db.create_user(name, mobile, email, hashed_password, gender, role)
-        current_user=db.read_user(mobile)
+        current_user=db.read_user_mobile(mobile)
+
+        profile_pic_url = None
+        if profile_pic:
+            result = upload_pic(profile_pic, "profile_pic", current_user[0])
+            if result["status"] == "error":
+                return jsonify({"msg": result["message"]}), 400
+            profile_pic_url = result["url"]
         
         # Store profile picture URL
         if profile_pic_url:
@@ -105,7 +107,7 @@ def update_profile():
     db.update_user(current_user[0],data) 
     user = db.read_user(current_user[0]) 
     if profile_pic:
-        filepath = upload_pic(profile_pic, "profile_pic", user[2])
+        filepath = upload_pic(profile_pic, "profile_pic", user[0])
         db.update_user_profile_pic(user[0],filepath) # Assuming user[0] is the
     return jsonify({"msg": "Profile updated successfully."}), 200
 
