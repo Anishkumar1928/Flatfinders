@@ -108,6 +108,7 @@ def update_profile():
     user = db.read_user(current_user[0]) 
     if profile_pic:
         filepath = upload_pic(profile_pic, "profile_pic", user[0])
+        print(filepath)
         db.update_user_profile_pic(user[0],filepath) # Assuming user[0] is the
     return jsonify({"msg": "Profile updated successfully."}), 200
 
