@@ -80,6 +80,7 @@ def login():
     if user and check_password_hash(user[4],password):  # Check hashed password
         # Create JWT token
         access_token = create_access_token(identity=user)
+        print("loggedin")
         return jsonify(access_token=access_token), 200
 
     return jsonify({"msg": "Bad username or password"}), 401
