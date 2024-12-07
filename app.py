@@ -157,6 +157,7 @@ def addproperty():
         
         db.create_property(user_id,property_type,rent,address,Pin_Code,dimensions,accommodation,is_occupancy,is_parking,is_kitchen)
         return jsonify({"msg": "added sucessfully"}),201
+    
     except Exception as e:
        print(f"Signup error: {e}")
        return jsonify({"msg": "An error occurred during signup"}), 500
