@@ -138,11 +138,12 @@ def protected():
 
 
 @app.route("/addproperty", methods=["POST"])
-@jwt_required()
+# @jwt_required()
 def addproperty():
     try:
-        current_user=get_jwt_identity()
-        user_id=current_user[0]
+        # current_user=get_jwt_identity()
+        # user_id=current_user[0]
+        user_id=11
         property_type = request.form.get("property_type")
         rent = request.form.get("rent")
         address = request.form.get("address")
