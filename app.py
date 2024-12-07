@@ -155,7 +155,9 @@ def addproperty():
         is_kitchen=request.form.get("is_kitchen")
         # profile_pic = request.files.get("file")   
         
-        db.create_property(user_id,property_type,rent,address,Pin_Code,dimensions,accommodation,is_occupancy,is_parking,is_kitchen)
+        print(user_id,property_type,rent,address,Pin_Code,dimensions,accommodation,is_occupancy,is_parking,is_kitchen)
+
+        # db.create_property(user_id,property_type,rent,address,Pin_Code,dimensions,accommodation,is_occupancy,is_parking,is_kitchen)
         return jsonify({"msg": "added sucessfully"}),201
     
     except Exception as e:
