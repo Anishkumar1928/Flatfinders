@@ -28,7 +28,7 @@ cursor.execute("""
         rent REAL NOT NULL,
         address TEXT NOT NULL,
         Pin_Code INTEGER NOT NULL,
-        dimensions REAL NOT NULL,
+        dimensions TEXT NOT NULL,
         accommodation TEXT CHECK (accommodation IN 
             ('OnlyGirls', 'OnlyBoys', 'OnlyFamily', 'FamilyAndGirls', 'Both')),
         is_occupancy BOOLEAN NOT NULL,
