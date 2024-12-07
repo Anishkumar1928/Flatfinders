@@ -137,5 +137,44 @@ def protected():
     return jsonify(logged_in_as=user,profilpic=profilpic), 200
 
 
+@app.route("/addproperty", methods=["POST"])
+@jwt_required()
+def addproperty():
+    try:
+        current_user=get_jwt_identity()
+        user_id=current_user[0]
+        property_type = request.form.get("property_type")
+        rent = request.form.get("rent")
+        address = request.form.get("address")
+        Pin_Code = request.form.get("Pin_Code")
+        dimensions = request.form.get("dimensions")
+        accommodation = request.form.get("accommodation")
+        is_occupancy=request.form.get("is_occupancy")
+        is_parking=request.form.get("is_parking")
+        is_kitchen=request.form.get("is_kitchen")
+        # profile_pic = request.files.get("file")   
+        
+        db.create_property(user_id,property_type,rent,address,Pin_Code,dimensions,accommodation,is_occupancy,is_parking,is_kitchen)
+        return jsonify({"msg": "added sucessfully"}),201
+    except Exception as e:
+       print(f"Signup error: {e}")
+       return jsonify({"msg": "An error occurred during signup"}), 500
+    
+
+@app.route("/getproperty",methods=["POST"])
+@jwt_required()
+def getproperty():
+    data = request.get_json()
+    property_id = data.get("property_id")
+    try:
+        propertydetails = db.read_property(property_id)
+        return jsonify(propertydetails=propertydetails), 200
+    except Exception as e:
+       print(f"propert not found: {e}")
+       return jsonify({"msg": "propert not found"}), 500
+    
+
+
+    
 
 
