@@ -143,16 +143,17 @@ def addproperty():
     try:
         # current_user=get_jwt_identity()
         # user_id=current_user[0]
+        data = request.get_json()
         user_id=11
-        property_type = request.form.get("property_type")
-        rent = request.form.get("rent")
-        address = request.form.get("address")
-        Pin_Code = request.form.get("Pin_Code")
-        dimensions = request.form.get("dimensions")
-        accommodation = request.form.get("accommodation")
-        is_occupancy=request.form.get("is_occupancy")
-        is_parking=request.form.get("is_parking")
-        is_kitchen=request.form.get("is_kitchen")
+        property_type = data.get("property_type")
+        rent = data.get("rent")
+        address = data.get("address")
+        Pin_Code = data.get("Pin_Code")
+        dimensions = data.get("dimensions")
+        accommodation = data.get("accommodation")
+        is_occupancy=data.get("is_occupancy")
+        is_parking=data.get("is_parking")
+        is_kitchen=data.get("is_kitchen")
         # profile_pic = request.files.get("file")   
         
         print(user_id,property_type,rent,address,Pin_Code,dimensions,accommodation,is_occupancy,is_parking,is_kitchen)
