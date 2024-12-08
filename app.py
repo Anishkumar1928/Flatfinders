@@ -180,6 +180,16 @@ def getproperty():
     
 
 
-    
+@app.route("/deleteproperty",methods=["POST"])
+@jwt_required()
+def deleteproperty():
+    data = request.get_json()
+    property_id = data.get("property_id")
+    try:
+        propertydetails = db.delete_property(property_id)
+        return jsonify(propertydetails=propertydetails), 200
+    except Exception as e:
+       print(f"error: {e}")
+       return jsonify({"msg": "Error"}), 500
 
 

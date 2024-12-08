@@ -152,9 +152,11 @@ class RentalAppDB:
             with self.connection.cursor() as cursor:
                 cursor.execute("DELETE FROM property WHERE property_id = %s;", (property_id,))
                 self.connection.commit()
+                return "property deleted"
         except psycopg2.Error as e:
             print(f"Error deleting property: {e}")
             self.connection.rollback()
+            return f"Error deleting property: {e}"
 
     # User Profile Picture CRUD Operations
     def create_user_profile_pic(self, user_id, photo_id_link):
