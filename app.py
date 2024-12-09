@@ -157,22 +157,24 @@ def register_property():
         #handle data upload
         property_id=db.create_property(current_user[0],property_type,rent,address,pin_code,dimensions,
                            accommodation,True,is_parking,is_kitchen)
+        print(property_id)
 
         # Handle image uploads
         images = request.files.getlist('images')
-        uploaded_image_urls = []
-        
+        if images:
+            uploaded_image_urls = []
+            
 
-        for index, image_file in enumerate(images):
-            result = upload_pic(
-                image_file=image_file,
-                type="property_pic",
-                name=f"{property_type}_{index}"
-            )
-            if result["status"] == "success":
-                db.create_property_picture(property_id,result["url"])
-            else:
-                return jsonify({"error": result["message"]}), 500
+            for index, image_file in enumerate(images):
+                result = upload_pic(
+                    image_file=image_file,
+                    type="property_pic",
+                    name=f"{property_type}_{index}"
+                )
+                if result["status"] == "success":
+                    db.create_property_picture(property_id,result["url"])
+                else:
+                    return jsonify({"error": result["message"]}), 500
 
         # Simulate storing property data
         property_data = {
