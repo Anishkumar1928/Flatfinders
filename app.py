@@ -157,14 +157,12 @@ def register_property():
         #handle data upload
         property_id=db.create_property(current_user[0],property_type,rent,address,pin_code,dimensions,
                            accommodation,True,is_parking,is_kitchen)
-        print(property_id)
+        print(property_id,"is id of property")
 
         # Handle image uploads
         images = request.files.getlist('images')
         if images:
             uploaded_image_urls = []
-            
-
             for index, image_file in enumerate(images):
                 result = upload_pic(
                     image_file=image_file,
