@@ -86,12 +86,19 @@ class RentalAppDB:
             with self.connection.cursor() as cursor:
                 cursor.execute("""
                     INSERT INTO property (user_id, property_type, rent, address, pin_code, dimensions, accommodation, is_occupancy, is_parking, is_kitchen)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    RETURNING property_id;
                 """, (user_id, property_type, rent, address, pin_code, dimensions, accommodation, is_occupancy, is_parking, is_kitchen))
+                
+                # Fetch the inserted property_id
+                property_id = cursor.fetchone()[0]
                 self.connection.commit()
+                return property_id
         except psycopg2.Error as e:
             print(f"Error creating property: {e}")
             self.connection.rollback()
+            return None
+
 
     def read_property(self, property_id):
         try:

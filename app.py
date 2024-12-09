@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 # Setup the Flask-JWT-Extended extension
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limit upload size to 16MB
 jwt = JWTManager(app)
 
 # Initialize your database class
@@ -138,32 +139,63 @@ def protected():
     return jsonify(logged_in_as=user,profilpic=profilpic), 200
 
 
-@app.route("/addproperty", methods=["POST"])
+@app.route('/property', methods=['POST'])
 @jwt_required()
-def addproperty():
+def register_property():
     try:
-        current_user=get_jwt_identity()
-        user_id=current_user[0]
-        data = request.get_json()
-        property_type = data.get("property_type")
-        rent = data.get("rent")
-        address = data.get("address")
-        Pin_Code = data.get("Pin_Code")
-        dimensions = data.get("dimensions")
-        accommodation = data.get("accommodation")
-        is_occupancy=data.get("is_occupancy")
-        is_parking=data.get("is_parking")
-        is_kitchen=data.get("is_kitchen")
-        # profile_pic = request.files.get("file")   
-        
-        print(user_id,property_type,rent,address,Pin_Code,dimensions,accommodation,is_occupancy,is_parking,is_kitchen)
+        current_user = get_jwt_identity()
+        userid = db.read_user(current_user[0])
+        # Retrieve form data
+        property_type = request.form.get('propertyType')
+        rent = request.form.get('rent')
+        address = request.form.get('address')
+        pin_code = request.form.get('pinCode')
+        dimensions = request.form.get('dimensions')
+        accommodation = request.form.get('accommodation')
+        is_parking = request.form.get('isParking') == 'true'
+        is_kitchen = request.form.get('isKitchen') == 'true'
 
-        db.create_property(user_id,property_type,rent,address,Pin_Code,dimensions,accommodation,is_occupancy,is_parking,is_kitchen)
-        return jsonify({"msg": "added sucessfully"}),201
-    
+        #handle data upload
+        property_id=db.create_property(userid,property_type,rent,address,pin_code,dimensions,
+                           accommodation,True,is_parking,is_kitchen)
+
+        # Handle image uploads
+        images = request.files.getlist('images')
+        uploaded_image_urls = []
+        
+
+        for index, image_file in enumerate(images):
+            result = upload_pic(
+                image_file=image_file,
+                type="property_pic",
+                name=f"{property_type}_{index}"
+            )
+            if result["status"] == "success":
+                db.create_property_picture(property_id,result["url"])
+            else:
+                return jsonify({"error": result["message"]}), 500
+
+        # Simulate storing property data
+        property_data = {
+            "propertyid":property_id,
+            "propertyType": property_type,
+            "rent": rent,
+            "address": address,
+            "pinCode": pin_code,
+            "dimensions": dimensions,
+            "accommodation": accommodation,
+            "isParking": is_parking,
+            "isKitchen": is_kitchen,
+            "images": uploaded_image_urls,
+        }
+
+        return jsonify({
+            "message": "Property registered successfully!",
+            "property": property_data
+        }), 201
+
     except Exception as e:
-       print(f"Signup error: {e}")
-       return jsonify({"msg": "An error occurred during signup"}), 500
+        return jsonify({"error": str(e)}), 400
     
 
 @app.route("/getproperty",methods=["POST"])
