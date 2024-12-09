@@ -144,6 +144,10 @@ def protected():
 def register_property():
     try:
         current_user = get_jwt_identity()
+        # Check incoming request data
+        print("Form data:", request.form)
+        print("Files:", request.files)
+
         # Retrieve form data
         property_type = request.form.get('propertyType')
         rent = request.form.get('rent')
@@ -154,15 +158,27 @@ def register_property():
         is_parking = request.form.get('isParking') == 'true'
         is_kitchen = request.form.get('isKitchen') == 'true'
 
-        #handle data upload
-        property_id=db.create_property(current_user[0],property_type,rent,address,pin_code,dimensions,
-                           accommodation,True,is_parking,is_kitchen)
-        print(property_id,"is id of property")
+        # Validate required fields
+        if not property_type or not rent or not address:
+            return jsonify({"error": "Missing required fields"}), 400
+
+        # Validate rent and pinCode format
+        try:
+            rent = float(rent)
+            pin_code = int(pin_code)
+        except ValueError:
+            return jsonify({"error": "Invalid rent or pinCode format"}), 400
+
+        # Handle data upload
+        property_id = db.create_property(current_user[0], property_type, rent, address, pin_code, dimensions,
+                                         accommodation, True, is_parking, is_kitchen)
+        if not property_id:
+            return jsonify({"error": "Failed to create property in the database"}), 500
 
         # Handle image uploads
         images = request.files.getlist('images')
+        uploaded_image_urls = []
         if images:
-            uploaded_image_urls = []
             for index, image_file in enumerate(images):
                 result = upload_pic(
                     image_file=image_file,
@@ -170,13 +186,14 @@ def register_property():
                     name=f"{property_type}_{index}"
                 )
                 if result["status"] == "success":
-                    db.create_property_picture(property_id,result["url"])
+                    db.create_property_picture(property_id, result["url"])
+                    uploaded_image_urls.append(result["url"])
                 else:
                     return jsonify({"error": result["message"]}), 500
 
         # Simulate storing property data
         property_data = {
-            "propertyid":property_id,
+            "propertyid": property_id,
             "propertyType": property_type,
             "rent": rent,
             "address": address,
@@ -194,7 +211,9 @@ def register_property():
         }), 201
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 400
+        print(f"Error: {str(e)}")
+        return jsonify({"error": f"An error occurred: {str(e)}"}), 400
+
     
 
 @app.route("/getproperty",methods=["POST"])
