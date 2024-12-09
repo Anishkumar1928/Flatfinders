@@ -144,7 +144,6 @@ def protected():
 def register_property():
     try:
         current_user = get_jwt_identity()
-        userid = db.read_user(current_user[0])
         # Retrieve form data
         property_type = request.form.get('propertyType')
         rent = request.form.get('rent')
@@ -156,7 +155,7 @@ def register_property():
         is_kitchen = request.form.get('isKitchen') == 'true'
 
         #handle data upload
-        property_id=db.create_property(userid,property_type,rent,address,pin_code,dimensions,
+        property_id=db.create_property(current_user[0],property_type,rent,address,pin_code,dimensions,
                            accommodation,True,is_parking,is_kitchen)
 
         # Handle image uploads
