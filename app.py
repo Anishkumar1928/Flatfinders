@@ -204,7 +204,7 @@ def register_property():
             "isKitchen": is_kitchen,
             "images": uploaded_image_urls,
         }
-
+        print(property_id)
         return jsonify({
             "message": "Property registered successfully!",
             "property": property_data
