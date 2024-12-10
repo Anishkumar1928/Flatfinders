@@ -227,7 +227,7 @@ class RentalAppDB:
         try:
             with self.connection.cursor() as cursor:
                 cursor.execute("SELECT * FROM photo WHERE property_id = %s AND photo_type = 'Property_pic';", (property_id,))
-                return cursor.fetchone()
+                return cursor.fetchall()
         except psycopg2.Error as e:
             print(f"Error reading property picture for property {property_id}: {e}")
             self.connection.rollback()
