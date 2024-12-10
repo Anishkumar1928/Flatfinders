@@ -243,4 +243,3 @@ def deleteproperty():
        print(f"error: {e}")
        return jsonify({"msg": "Error"}), 500
 
-
