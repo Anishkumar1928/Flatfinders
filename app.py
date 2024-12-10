@@ -183,7 +183,7 @@ def register_property():
                 result = upload_pic(
                     image_file=image_file,
                     type="property_pic",
-                    name=f"{property_type}_{index}"
+                    name=f"{property_id}_{index}"
                 )
                 if result["status"] == "success":
                     db.create_property_picture(property_id, result["url"])
