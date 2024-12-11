@@ -242,4 +242,8 @@ def deleteproperty():
     except Exception as e:
        print(f"error: {e}")
        return jsonify({"msg": "Error"}), 500
+    
+
+
+    
 
