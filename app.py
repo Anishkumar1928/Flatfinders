@@ -243,18 +243,7 @@ def deleteproperty():
        print(f"error: {e}")
        return jsonify({"msg": "Error"}), 500
     
-@app.route("/hii",methods=["POST"])
-@jwt_required()
-def pinproperty():
-    data = request.get_json()
-    property_id = data.get("property_id")
-    try:
-        propertydetails = db.read_property(property_id)
-        property_photo=db.read_property_picture(property_id)
-        return jsonify(propertydetails=propertydetails,property_photo=property_photo), 200
-    except Exception as e:
-       print(f"propert not found: {e}")
-       return jsonify({"msg": "propert not found"}), 500
+
 
     
 
