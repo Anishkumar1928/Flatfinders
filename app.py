@@ -245,6 +245,7 @@ def deleteproperty():
     
 
 @app.rout("/getpropertybypincode",methods=["POST"])
+@jwt_required()
 def getpropertybypincode():
     return "hii"
 
