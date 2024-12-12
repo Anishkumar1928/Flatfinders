@@ -109,6 +109,16 @@ class RentalAppDB:
             print(f"Error reading property: {e}")
             self.connection.rollback()
             return None
+        
+    def read_property_pincode(self, pincode):
+        try:
+            with self.connection.cursor() as cursor:
+                cursor.execute(" select * from property where pin_code = %s;", (pincode,))
+                return cursor.fetchall()
+        except psycopg2.Error as e:
+            print(f"Error reading property: {e}")
+            self.connection.rollback()
+            return None
 
     def update_property(self, property_id, user_id=None, property_type=None, rent=None, address=None, pin_code=None, dimensions=None, accommodation=None, is_occupancy=None, is_parking=None, is_kitchen=None):
         try:
