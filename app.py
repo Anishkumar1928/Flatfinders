@@ -244,7 +244,7 @@ def deleteproperty():
        return jsonify({"msg": "Error"}), 500
     
 
-@app.rout("/getpropertybypincode",methods=["POST"])
+@app.rout("/getpropertybypincode",methods=["GET"])
 @jwt_required()
 def getpropertybypincode():
     return "hii"
