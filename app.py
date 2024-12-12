@@ -243,10 +243,9 @@ def deleteproperty():
        print(f"error: {e}")
        return jsonify({"msg": "Error"}), 500
     
-
-@app.route("/getpropertybypincode",methods=["GET"])
+@app.route("/hii",methods=["POST"])
 @jwt_required()
-def getpropertybypincode():
+def pinproperty():
     data = request.get_json()
     property_id = data.get("property_id")
     try:
