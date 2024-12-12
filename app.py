@@ -246,9 +246,7 @@ def deleteproperty():
 
 @app.rout("/getpropertybypincode",methods=["POST"])
 def getpropertybypincode():
-    data = request.get_json()
-    property = data.get("property_id")
-    return jsonify({"msg":property})
+    return "hii"
 
     
 
