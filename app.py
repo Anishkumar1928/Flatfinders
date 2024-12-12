@@ -244,6 +244,17 @@ def deleteproperty():
        return jsonify({"msg": "Error"}), 500
     
 
+@app.rout("/getpropertybypincode",methods=["POST"])
+def getpropertybypincode():
+    data = request.get_json()
+    pincode=data.get=("pin_code")
+    try:
+        properties=db.read_property_pincode(pincode)
+        print(properties)
+        return jsonify(properties=properties), 200
+    except Exception as e:
+       print(f"propert not found: {e}")
+       return jsonify({"msg": "propert not found"}), 500
 
     
 
