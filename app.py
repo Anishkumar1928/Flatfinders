@@ -20,9 +20,6 @@ db = RentalAppDB()
 def home():
     return "app is running"
 
-@app.route("/home")
-def bro():
-    return "app is running"
 
 # Create a route to authenticate your users and return JWTs.
 @app.route("/signup", methods=["POST"])
