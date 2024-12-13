@@ -222,10 +222,16 @@ def register_property():
 def getproperty():
     data = request.get_json()
     property_id = data.get("property_id")
+    pin_code = data.get("pin_code")
     try:
-        propertydetails = db.read_property(property_id)
-        property_photo=db.read_property_picture(property_id)
-        return jsonify(propertydetails=propertydetails,property_photo=property_photo), 200
+        if property_id:
+            propertydetails = db.read_property(property_id)
+            property_photo=db.read_property_picture(property_id)
+            return jsonify(propertydetails=propertydetails,property_photo=property_photo), 200
+        if pin_code:
+            propertydetails = db.read_property_pincode(pin_code)
+            # property_photo=db.read_property_picture(property_id)
+            return jsonify(propertydetails=propertydetails,property_photo=property_photo), 200
     except Exception as e:
        print(f"propert not found: {e}")
        return jsonify({"msg": "propert not found"}), 500
