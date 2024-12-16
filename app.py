@@ -217,6 +217,7 @@ def register_property():
 
     
 
+
 @app.route("/getproperty",methods=["POST"])
 @jwt_required()
 def getproperty():
