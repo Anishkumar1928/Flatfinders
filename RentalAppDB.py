@@ -3,7 +3,7 @@ import psycopg2
 class RentalAppDB:
     def __init__(self):
         # PostgreSQL connection string
-        self.connection_string = "postgresql://flatfinders_owner:lc0okti2nVdW@ep-jolly-rain-a1vbvt19.ap-southeast-1.aws.neon.tech/flatfinders?sslmode=require"
+        self.connection_string = "postgresql://neondb_owner:pCQ17GRgseEA@ep-floral-queen-a1ho5e16.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
         self.connection = psycopg2.connect(self.connection_string)
    
     # User CRUD Operations
