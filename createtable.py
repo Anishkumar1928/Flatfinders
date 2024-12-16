@@ -2,7 +2,7 @@ import psycopg2
 
 # Connect to the PostgreSQL database
 conn = psycopg2.connect(
-    "postgresql://neondb_owner:pCQ17GRgseEA@ep-floral-queen-a1ho5e16.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+    "postgresql://postgres:uRJBdEBYCSLCaldOhSTqTMRqdeNrjFUn@junction.proxy.rlwy.net:31381/railway"
 )
 cursor = conn.cursor()
 
