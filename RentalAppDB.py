@@ -1,4 +1,6 @@
 import psycopg2
+from time import time
+
 
 class RentalAppDB:
     def __init__(self):
@@ -207,6 +209,7 @@ class RentalAppDB:
                     WHERE user_id = %s AND photo_type = 'Profile_pic';
                 """, (photo_id_link, user_id))
                 self.connection.commit()
+                print("Profile updated successfully")
         except psycopg2.Error as e:
             print(f"Error updating profile picture for user {user_id}: {e}")
             self.connection.rollback()
