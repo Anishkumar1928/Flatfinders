@@ -55,6 +55,8 @@ def signup():
             if result["status"] == "error":
                 return jsonify({"msg": result["message"]}), 400
             profile_pic_url = result["url"]
+
+        print(profile_pic_url)
         
         # Store profile picture URL
         if profile_pic_url:
