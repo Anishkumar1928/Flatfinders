@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
 from firebase import upload_pic,delete_pic
+from datetime import timedelta
 
 
 app = Flask(__name__)
@@ -83,7 +84,7 @@ def login():
 
     if user and check_password_hash(user[4],password):  # Check hashed password
         # Create JWT token
-        access_token = create_access_token(identity=user)
+        access_token = create_access_token(identity=user, expires_delta=timedelta(days=3))
         print("loggedin")
         return jsonify(access_token=access_token), 200
 
