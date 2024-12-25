@@ -233,10 +233,19 @@ def getproperty():
             property_photo=db.read_property_picture(property_id)
             return jsonify(propertydetails=propertydetails,property_photo=property_photo), 200
         if pin_code:
+            # Fetch properties based on the given pin code
             propertydetails = db.read_property_pincode(pin_code)
-            result = [[item[0],item[2],item[3]] for item in propertydetails]
-            property_photo=[db.read_property_picture(property_id[0]) for property_id in propertydetails] 
-            return jsonify(propertydetails=propertydetails,property_photo=property_photo), 200
+
+            # Fetch associated property photos for each property
+            merged_data = []
+            for property_detail in propertydetails:
+                property_id = property_detail[0]  # Assuming the first item in the tuple is the property ID
+                property_pictures = db.read_property_picture(property_id)
+                merged_data.append({
+                    "property_details": property_detail,
+                    "property_photos": property_pictures
+                })
+            return jsonify(merged_data), 200
     except Exception as e:
        print(f"propert not found: {e}")
        return jsonify({"msg": "property not found"}), 500
