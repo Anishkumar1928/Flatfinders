@@ -236,7 +236,7 @@ def getproperty():
             propertydetails = db.read_property_pincode(pin_code)
             result = [[item[0],item[2],item[3]] for item in propertydetails]
             property_photo=[db.read_property_picture(property_id[0]) for property_id in propertydetails] 
-            return jsonify(propertydetails=result,property_photo=property_photo), 200
+            return jsonify(propertydetails=propertydetails,property_photo=property_photo), 200
     except Exception as e:
        print(f"propert not found: {e}")
        return jsonify({"msg": "property not found"}), 500
