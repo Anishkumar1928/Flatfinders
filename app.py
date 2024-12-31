@@ -227,14 +227,16 @@ def getproperty():
     data = request.get_json()
     property_id = data.get("property_id")
     pin_code = data.get("pin_code")
-    userid=data.get("user_id")
     try:
         if property_id:
             propertydetails = db.read_property(property_id)
             property_photo=db.read_property_picture(property_id)
             return jsonify(propertydetails=propertydetails,property_photo=property_photo), 200
-        if userid:
-            propertydetails = db.read_property_by_id(userid)
+        elif pin_code:
+            # Fetch properties based on the given pin code
+            propertydetails = db.read_property_pincode(pin_code)
+
+            # Fetch associated property photos for each property
             merged_data = []
             for property_detail in propertydetails:
                 property_id = property_detail[0]  # Assuming the first item in the tuple is the property ID
@@ -244,11 +246,9 @@ def getproperty():
                     "property_photos": property_pictures
                 })
             return jsonify(merged_data), 200
-        if pin_code:
-            # Fetch properties based on the given pin code
-            propertydetails = db.read_property_pincode(pin_code)
-
-            # Fetch associated property photos for each property
+        else:
+            current_user = get_jwt_identity()
+            propertydetails = db.read_property_by_id(current_user[0])
             merged_data = []
             for property_detail in propertydetails:
                 property_id = property_detail[0]  # Assuming the first item in the tuple is the property ID
