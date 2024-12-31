@@ -118,6 +118,37 @@ def update_profile():
         db.update_user_profile_pic(user[0],filepath) # Assuming user[0] is the
     return jsonify({"msg": "Profile updated successfully."}), 200
 
+@app.route("/update_password", methods=["PUT"])
+@jwt_required()
+def update_password():
+    try:
+        # Get the current user's identity from the JWT
+        current_user = get_jwt_identity()
+
+        # Fetch the user's details from the database
+        user = db.read_user(current_user[0])  # Assuming user[0] is the user_id
+        if not user:
+            return jsonify({"msg": "User not found."}), 404
+
+        # Get the old password and new password from the request
+        data = request.get_json()
+        new_password = data.get("new_password")
+
+        # Hash the new password
+        hashed_new_password = generate_password_hash(new_password)
+
+        changes={"password": hashed_new_password}
+
+        # Update the password in the database
+        db.update_user_password(current_user[0], changes)
+
+        return jsonify({"msg": "Password updated successfully."}), 200
+
+    except Exception as e:
+        print(f"Error updating password: {e}")
+        return jsonify({"msg": "An error occurred while updating the password."}), 500
+
+
 @app.route("/delete_user", methods=["DELETE"])
 @jwt_required()
 def delete_user():
