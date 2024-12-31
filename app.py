@@ -140,7 +140,7 @@ def update_password():
         changes={"password": hashed_new_password}
 
         # Update the password in the database
-        db.update_user_password(current_user[0], changes)
+        db.update_user(current_user[0], changes)
 
         return jsonify({"msg": "Password updated successfully."}), 200
 
