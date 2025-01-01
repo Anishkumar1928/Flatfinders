@@ -1,11 +1,11 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request,render_template
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 from werkzeug.security import generate_password_hash, check_password_hash
 from firebase import upload_pic,delete_pic
 from datetime import timedelta
 
 
-app = Flask(__name__)
+app = Flask(__name__,template_folder="templates")
 
 # Setup the Flask-JWT-Extended extension
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
@@ -19,7 +19,7 @@ db = RentalAppDB()
 
 @app.route("/")
 def home():
-    return "app is running"
+    return render_template("index.html")
 
 
 # Create a route to authenticate your users and return JWTs.
