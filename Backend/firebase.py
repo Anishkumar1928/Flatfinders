@@ -1,5 +1,7 @@
 import pyrebase
 import os
+import json
+
 # Firebase configuration
 config = {
     "apiKey": "AIzaSyDM3OwPc2E1ArPz3bK3gUJY-vSUWrfIQcs",
@@ -9,8 +11,17 @@ config = {
     "messagingSenderId": "900610869951",
     "appId": "1:900610869951:web:9513bb6a17e23b417ed40a",
     "databaseURL": "",
-    "serviceAccount": os.path.join(os.getcwd(), "serviceAccountKey.json")
+    "serviceAccount": None  # No file, we will load from environment
 }
+
+# Load the Firebase service account key from the environment variable
+firebase_service_account_key = os.getenv("FIREBASE_SERVICE_ACCOUNT_KEY")
+
+if firebase_service_account_key:
+    # Convert the JSON string to a dictionary
+    service_account = json.loads(firebase_service_account_key)
+    # Add the service account credentials to the config
+    config["serviceAccount"] = service_account
 
 # Initialize Firebase
 firebase = pyrebase.initialize_app(config)
@@ -49,12 +60,8 @@ def delete_pic(storage_path):
         print(f"Error deleting image: {e}")
         return False
 
-
-
 # Example usage
 if __name__ == "__main__":
-    # print(storage.child("yoyo").child("yoyo.jpeg").put("yoyo.jpeg"))
-    #storage.delete("yoyo/yoyo.jpeg", None)
-    print(upload_pic("yoyo.jpeg","yoyo","12i4"))
-    # delete_pic("12i4.jpg")
-    # print(os.getcwd())
+    # Example for uploading
+    with open("yoyo.jpeg", "rb") as image_file:
+        print(upload_pic(image_file, "yoyo", "12i4"))
