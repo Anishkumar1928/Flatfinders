@@ -1,8 +1,9 @@
 import psycopg2
+import os
 
 # Connect to the PostgreSQL database
 conn = psycopg2.connect(
-    "postgresql://postgres:uRJBdEBYCSLCaldOhSTqTMRqdeNrjFUn@junction.proxy.rlwy.net:31381/railway"
+    os.getenv("POSTGRESQL_DATABASE_URL")
 )
 cursor = conn.cursor()
 

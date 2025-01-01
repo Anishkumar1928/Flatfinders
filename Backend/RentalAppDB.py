@@ -1,11 +1,12 @@
 import psycopg2
 from time import time
+import os
 
 
 class RentalAppDB:
     def __init__(self):
         # PostgreSQL connection string
-        self.connection_string = "postgresql://postgres:uRJBdEBYCSLCaldOhSTqTMRqdeNrjFUn@junction.proxy.rlwy.net:31381/railway"
+        self.connection_string = os.getenv("POSTGRESQL_DATABASE_URL")
         self.connection = psycopg2.connect(self.connection_string)
    
     # User CRUD Operations
