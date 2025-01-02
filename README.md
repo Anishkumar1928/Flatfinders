@@ -55,7 +55,7 @@ FlatFinders is a comprehensive solution for renters and property owners. Renters
   - `POST /getproperty`
   - `POST /deleteproperty`
 
-For detailed API documentation, refer to the [Backend Code](backendcode.txt).
+For detailed API documentation, refer to the [Backend Code](Backend).
 
 ---
 
@@ -74,7 +74,7 @@ For detailed API documentation, refer to the [Backend Code](backendcode.txt).
 - **Property Registration:** Add new properties
 - **Property Details:** View detailed property information
 
-For more details, refer to the [Frontend Code](frontendcode.txt).
+For more details, refer to the [Frontend Code](Frontend).
 
 ---
 
