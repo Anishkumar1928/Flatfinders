@@ -272,9 +272,11 @@ def getproperty():
             for property_detail in propertydetails:
                 property_id = property_detail[0]  # Assuming the first item in the tuple is the property ID
                 property_pictures = db.read_property_picture(property_id)
+                ownercontact=db.read_user(property_detail[1])[2]
                 merged_data.append({
                     "property_details": property_detail,
-                    "property_photos": property_pictures
+                    "property_photos": property_pictures,
+                    "owner contact":ownercontact
                 })
             return jsonify(merged_data), 200
         else:
@@ -284,9 +286,11 @@ def getproperty():
             for property_detail in propertydetails:
                 property_id = property_detail[0]  # Assuming the first item in the tuple is the property ID
                 property_pictures = db.read_property_picture(property_id)
+                ownercontact=db.read_user(property_detail[1])[2]
                 merged_data.append({
                     "property_details": property_detail,
-                    "property_photos": property_pictures
+                    "property_photos": property_pictures,
+                    "owner contact":ownercontact
                 })
             return jsonify(merged_data), 200
     except Exception as e:
