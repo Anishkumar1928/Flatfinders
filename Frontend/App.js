@@ -1,6 +1,6 @@
 import { AuthProvider } from './Screen/ContextApi';
 import AppNavigator from './Screen/AppNavigator';
-import ChangePasswordScreen from './Screen/ChangePassword'
+import ContactCard from './Screen/Component/ContactCard'
 const App = () => {
   return (
     <AuthProvider>
@@ -9,4 +9,4 @@ const App = () => {
   );   
 };
 export default App;
-  
+   
