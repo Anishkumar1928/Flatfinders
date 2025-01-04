@@ -4,11 +4,11 @@
     "slug": "snack-e28e932e-60e9-4ac0-be34-e1754972e14d",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/snack-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/snack-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,12 +17,25 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/snack-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.anishkumar101.snacke28e932e60e94ac0be34e1754972e14d",
+      "jsEngine": "hermes",  // Enable Hermes for smaller APK size
+      "enableProguardInReleaseBuilds": true, // Enable Proguard to shrink code
+      "minifyEnabled": true,  // Minify the JavaScript bundle
+      "shrinkResources": true,  // Remove unused resources
+      "splits": {
+        "abi": true  // Split APKs by architecture for smaller APKs
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/snack-icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "16f3b940-dd43-4886-9da8-df84e61de6c3"
+      }
     }
   }
 }
