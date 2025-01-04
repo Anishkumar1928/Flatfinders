@@ -276,7 +276,7 @@ def getproperty():
                 merged_data.append({
                     "property_details": property_detail,
                     "property_photos": property_pictures,
-                    "owner contact":ownercontact
+                    "owner_contact":ownercontact
                 })
             return jsonify(merged_data), 200
         else:
@@ -290,7 +290,7 @@ def getproperty():
                 merged_data.append({
                     "property_details": property_detail,
                     "property_photos": property_pictures,
-                    "owner contact":ownercontact
+                    "owner_contact":ownercontact
                 })
             return jsonify(merged_data), 200
     except Exception as e:
