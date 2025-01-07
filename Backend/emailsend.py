@@ -4,7 +4,7 @@ from email.mime.multipart import MIMEMultipart
 
 
 sender_email="flatfindersapp@gmail.com"
-sender_password="Anishkumar8084"
+sender_password="ynhcncyrtpudbguw"
 
 def send_email(recipient_email, subject, body):
     try:
@@ -30,9 +30,7 @@ def send_email(recipient_email, subject, body):
 
 # # Example usage
 # send_email(
-#     sender_email="your_email@gmail.com",
-#     sender_password="your_app_password",  # Use App Password here
-#     recipient_email="recipient_email@gmail.com",
+#     recipient_email="mr.anish.kmr@gmail.com",
 #     subject="Test Email",
 #     body="This is a test email sent using smtplib!"
 # )
