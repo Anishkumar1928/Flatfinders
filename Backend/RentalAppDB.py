@@ -41,6 +41,16 @@ class RentalAppDB:
             print(f"Error reading user: {e}")
             self.connection.rollback()
             return None
+        
+    def read_user_email(self, email):
+        try:
+            with self.connection.cursor() as cursor:
+                cursor.execute('SELECT * FROM "user" WHERE "email" = %s;', (email,))
+                return cursor.fetchone()
+        except psycopg2.Error as e:
+            print(f"Error reading user: {e}")
+            self.connection.rollback()
+            return None
 
     def update_user(self, user_id, changes):
         try:

@@ -3,6 +3,10 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from werkzeug.security import generate_password_hash, check_password_hash
 from firebase import upload_pic,delete_pic
 from datetime import timedelta
+from flask_mail import Mail, Message
+import random
+import string
+
 
 
 app = Flask(__name__,template_folder="templates")
@@ -10,6 +14,13 @@ app = Flask(__name__,template_folder="templates")
 # Setup the Flask-JWT-Extended extension
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limit upload size to 16MB
+# Setup Flask-Mail for sending emails
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = "flatfindersapp@gmail.com"  # Replace with your email
+app.config["MAIL_PASSWORD"] = "anish8084"         # Replace with your email password
+mail = Mail(app)
 jwt = JWTManager(app)
 
 # Initialize your database class
@@ -310,6 +321,69 @@ def deleteproperty():
     except Exception as e:
        print(f"error: {e}")
        return jsonify({"msg": "Error"}), 500
+    
+
+
+reset_tokens = {}
+
+def generate_reset_token():
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=6))
+
+@app.route('/forgot_password', methods=['POST'])
+def forgot_password():
+    try:
+        data = request.get_json()
+        email = data.get("email")
+
+        # Check if user exists
+        user = db.read_user_email(email)
+        if not user:
+            return jsonify({"msg": "User not found"}), 404
+
+        # Generate a reset token
+        token = generate_reset_token()
+        reset_tokens[email] = token
+
+        # Send token via email
+        msg = Message(
+            "Password Reset Token",
+            sender="your_email@gmail.com",
+            recipients=[email]
+        )
+        msg.body = f"Your password reset token is: {token}"
+        mail.send(msg)
+
+        return jsonify({"msg": "Password reset token sent to your email."}), 200
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"msg": "An error occurred while sending the reset token."}), 500
+
+@app.route('/reset_password', methods=['POST'])
+def reset_password():
+    try:
+        data = request.get_json()
+        email = data.get("email")
+        token = data.get("token")
+        new_password = data.get("new_password")
+
+        # Validate token
+        if email not in reset_tokens or reset_tokens[email] != token:
+            return jsonify({"msg": "Invalid or expired token."}), 400
+
+        # Update the user's password
+        hashed_password = generate_password_hash(new_password)
+        changes = {"password": hashed_password}
+        db.update_user_email(email, changes)
+
+        # Remove token after successful password reset
+        del reset_tokens[email]
+
+        return jsonify({"msg": "Password reset successful."}), 200
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"msg": "An error occurred while resetting the password."}), 500
     
 
 
