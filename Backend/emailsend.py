@@ -1,10 +1,11 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import os
 
 
-sender_email="flatfindersapp@gmail.com"
-sender_password="ynhcncyrtpudbguw"
+sender_email=os.getenv("EMAIL")
+sender_password=os.getenv("PASSWORD")
 
 def send_email(recipient_email, subject, body):
     try:
