@@ -4,10 +4,9 @@ from email.mime.multipart import MIMEMultipart
 import os
 
 
-sender_email=os.getenv("EMAIL")
-sender_password=os.getenv("PASSWORD")
-
 def send_email(recipient_email, subject, body):
+    sender_email=os.getenv("EMAIL")
+    sender_password=os.getenv("PASSWORD")
     try:
         # Create the message
         msg = MIMEMultipart()
