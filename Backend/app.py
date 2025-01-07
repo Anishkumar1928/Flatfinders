@@ -3,7 +3,7 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from werkzeug.security import generate_password_hash, check_password_hash
 from firebase import upload_pic,delete_pic
 from datetime import timedelta
-from flask_mail import Mail, Message
+from emailsend import send_email
 import random
 import string
 
@@ -14,13 +14,6 @@ app = Flask(__name__,template_folder="templates")
 # Setup the Flask-JWT-Extended extension
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limit upload size to 16MB
-# Setup Flask-Mail for sending emails
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = "flatfindersapp@gmail.com"  # Replace with your email
-app.config["MAIL_PASSWORD"] = "Anishkumar8084"         # Replace with your email password
-mail = Mail(app)
 jwt = JWTManager(app)
 
 # Initialize your database class
@@ -343,15 +336,8 @@ def forgot_password():
         # Generate a reset token
         token = generate_reset_token()
         reset_tokens[email] = token
-
-        # Send token via email
-        msg = Message(
-            "Password Reset Token",
-            sender="your_email@gmail.com",
-            recipients=[email]
-        )
-        msg.body = f"Your password reset token is: {token}"
-        mail.send(msg)
+        
+        send_email(email,f"Password Reset Token= {token}")
 
         return jsonify({"msg": "Password reset token sent to your email."}), 200
 
