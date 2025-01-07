@@ -78,6 +78,34 @@ class RentalAppDB:
             print(f"Error updating user: {e}")
             self.connection.rollback()
 
+    def update_user_email(self, email, changes):
+        try:
+            with self.connection.cursor() as cursor:
+                query = 'UPDATE "user" SET '
+                params = []
+
+                # Prepare the fields to update based on the provided changes
+                fields_to_update = []
+                for field, value in changes.items():
+                    if value is not None:  # Only include fields that are not None
+                        fields_to_update.append(f"{field} = %s")
+                        params.append(value)
+
+                # Check if there are fields to update
+                if fields_to_update:
+                    query += ", ".join(fields_to_update)
+                    query += " WHERE email = %s;"
+                    params.append(email)
+                    cursor.execute(query, params)
+                    self.connection.commit()
+                else:
+                    print("No fields to update.")
+        except psycopg2.Error as e:
+            print(f"Error updating user: {e}")
+            self.connection.rollback()
+
+
+
     def delete_user(self, mobile):
         try:
             user = self.read_user(mobile)
