@@ -8,12 +8,16 @@ def send_email(recipient_email, subject, body):
     sender_email=os.getenv("EMAIL")
     sender_password=os.getenv("PASSWORD")
     try:
+        html_file_path = "./templates/mail.html"
+        with open(html_file_path, 'r', encoding='utf-8') as file:
+            html_template = file.read()
+        html_content = html_template.replace("123456", body)
         # Create the message
         msg = MIMEMultipart()
         msg['From'] = sender_email
         msg['To'] = recipient_email
         msg['Subject'] = subject
-        msg.attach(MIMEText(body, 'plain'))
+        msg.attach(MIMEText(html_content, 'html'))
 
         # Connect to SMTP server
         server = smtplib.SMTP('smtp.gmail.com', 587)

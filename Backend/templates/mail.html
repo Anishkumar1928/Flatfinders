@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flatfinder OTP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #000000;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 10px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+        .content h2 {
+            color: black;
+            margin-bottom: 10px;
+        }
+        .otp {
+            display: inline-block;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #f4f4f9;
+            padding: 10px 20px;
+            margin: 20px 0;
+            border: 2px dashed #000000;
+            border-radius: 5px;
+            color: #333;
+        }
+        .footer {
+            background-color: #f4f4f9;
+            color: #888;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        @media only screen and (max-width: 600px) {
+            .content h2 {
+                font-size: 20px;
+            }
+            .otp {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>Welcome to Flatfinder</h1>
+        </div>
+        <div class="content">
+            <h2>Your OTP Code</h2>
+            <p>Please use the following OTP to Reset your Password:</p>
+            <div class="otp">123456</div>
+            <p>This OTP is valid for the next 10 minutes. Do not share it with anyone.</p>
+        </div>
+        <div class="footer">
+            <p>If you didn't request this OTP, please ignore this email or <a href="#">contact support</a>.</p>
+            <p>&copy; 2025 Flatfinder. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

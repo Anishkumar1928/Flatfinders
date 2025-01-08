@@ -337,7 +337,7 @@ def forgot_password():
         token = generate_reset_token()
         reset_tokens[email] = token
 
-        send_email(email,f"Flatfinderapp Reset Token",f"Password Reset Token= {token}")
+        send_email(email,f"Flatfinderapp Reset Token",token)
 
         return jsonify({"msg": "Password reset token sent to your email."}), 200
 
