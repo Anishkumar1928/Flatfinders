@@ -5,8 +5,8 @@ import os
 
 
 def send_email(recipient_email, subject, body):
-    sender_email=os.getenv("EMAIL")
-    sender_password=os.getenv("PASSWORD")
+    sender_email="flatfindersapp@gmail.com"
+    sender_password="tvnrxjzttqqblibx"
     try:
         html_file_path = "./templates/mail.html"
         with open(html_file_path, 'r', encoding='utf-8') as file:
