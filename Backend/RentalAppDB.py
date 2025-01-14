@@ -191,7 +191,7 @@ class RentalAppDB:
                     base_query += " AND rent <= %s"
                     query_params.append(filters['rent_max'])
                 
-                if 'pin_code' in filters:
+                if 'Pin_Code' in filters:
                     base_query += " AND pin_code = %s"
                     query_params.append(filters['pin_code'])
                 
