@@ -372,6 +372,19 @@ def reset_password():
         return jsonify({"msg": "An error occurred while resetting the password."}), 500
     
 
+@app.route('/search_property', methods=['POST'])
+def search_property():
+    try:
+        filters = request.json
+        result=db.search_property(filters)
+        return jsonify(result), 200
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"msg": "An error occurred while resetting the password."}), 500
+    
+
+    
+
 
     
 

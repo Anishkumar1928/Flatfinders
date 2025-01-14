@@ -170,6 +170,38 @@ class RentalAppDB:
             print(f"Error reading property: {e}")
             self.connection.rollback()
             return None
+        
+
+    def search_property(self, filters):
+        try:
+            with self.connection.cursor() as cursor:
+                base_query = "SELECT * FROM property WHERE 1=1"
+                query_params = []
+                
+                # Dynamically construct the query based on provided filters
+                if 'property_type' in filters:
+                    base_query += " AND property_type = %s"
+                    query_params.append(filters['property_type'])
+                
+                if 'rent_min' in filters:
+                    base_query += " AND rent >= %s"
+                    query_params.append(filters['rent_min'])
+                
+                if 'rent_max' in filters:
+                    base_query += " AND rent <= %s"
+                    query_params.append(filters['rent_max'])
+                
+                if 'pin_code' in filters:
+                    base_query += " AND pin_code = %s"
+                    query_params.append(filters['pin_code'])
+                
+                cursor.execute(base_query, query_params)
+                return cursor.fetchall()
+        except psycopg2.Error as e:
+            print(f"Error reading property: {e}")
+            self.connection.rollback()
+            return None
+
 
     def update_property(self, property_id, user_id=None, property_type=None, rent=None, address=None, pin_code=None, dimensions=None, accommodation=None, is_occupancy=None, is_parking=None, is_kitchen=None):
         try:
@@ -318,7 +350,6 @@ class RentalAppDB:
 
     def close(self):
         self.connection.close()
-
 
 
 
