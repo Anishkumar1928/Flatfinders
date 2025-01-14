@@ -194,6 +194,10 @@ class RentalAppDB:
                 if 'Pin_Code' in filters:
                     base_query += " AND pin_code = %s"
                     query_params.append(filters['Pin_Code'])
+
+                if 'accomodation' in filters:
+                    base_query += " AND accomodation = %s"
+                    query_params.append(filters['accomodation'])
                 
                 cursor.execute(base_query, query_params)
                 return cursor.fetchall()
