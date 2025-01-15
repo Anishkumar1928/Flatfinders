@@ -373,6 +373,7 @@ def reset_password():
     
 
 @app.route('/search_property', methods=['POST'])
+@jwt_required()
 def search_property():
     try:
         filters = request.json
