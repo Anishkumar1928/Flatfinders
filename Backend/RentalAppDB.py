@@ -180,8 +180,15 @@ class RentalAppDB:
                 
                 # Dynamically construct the query based on provided filters
                 if 'property_type' in filters:
-                    base_query += " AND property_type = %s"
-                    query_params.append(filters['property_type'])
+                    i=0
+                    for type in filters['property_type']:
+                        i=i+1
+                        if i==1:
+                            base_query += " AND property_type = %s"
+                            query_params.append(type)
+                        else:
+                            base_query += " OR property_type = %s"
+                            query_params.append(type)
                 
                 if 'rent_min' in filters:
                     base_query += " AND rent >= %s"
