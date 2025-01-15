@@ -303,7 +303,7 @@ def getproperty():
     
 
 
-@app.route("/deleteproperty", methods=["POST"])
+@app.route("/deleteproperty", methods=["DELETE"])
 @jwt_required()
 def deleteproperty():
     data = request.get_json()
