@@ -380,7 +380,7 @@ def search_property():
         return jsonify(result), 200
     except Exception as e:
         print(f"Error: {e}")
-        return jsonify({"msg": "An error occurred while resetting the password."}), 500
+        return jsonify({"msg": "Something went Wrong"}), 500
     
 
     
