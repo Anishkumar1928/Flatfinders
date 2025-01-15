@@ -308,24 +308,32 @@ def getproperty():
 def deleteproperty():
     data = request.get_json()
     property_id = data.get("property_id")
-    print(property_id)
+
+    # Log to check if property_id is being received
+    print(f"Received property_id: {property_id}")
+
     if not property_id:
-        print({"msg": "Property ID is required"})
+        print("Error: Property ID is required")
         return jsonify({"msg": "Property ID is required"}), 400
     
     try:
         # Assuming the db.delete_property function returns None if property is not found
         propertydetails = db.delete_property(property_id)
-        
+
+        # Log the result of the delete attempt
+        print(f"Delete result: {propertydetails}")
+
         if propertydetails is None:
             print("Property not found")
             return jsonify({"msg": "Property not found"}), 404
-        
+
+        # Log the successful deletion response
         return jsonify(msg=propertydetails), 200
-    
+
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error during deletion: {e}")
         return jsonify({"msg": f"Error: {str(e)}"}), 500
+
 
 
 
