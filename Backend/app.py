@@ -377,8 +377,18 @@ def reset_password():
 def search_property():
     try:
         filters = request.json
-        result=db.search_property(filters)
-        return jsonify(result), 200
+        propertydetails=db.search_property(filters)
+        merged_data = []
+        for property_detail in propertydetails:
+            property_id = property_detail[0]  # Assuming the first item in the tuple is the property ID
+            property_pictures = db.read_property_picture(property_id)
+            ownercontact=db.read_user(property_detail[1])[2]
+            merged_data.append({
+                "property_details": property_detail,
+                "property_photos": property_pictures,
+                "owner_contact":ownercontact
+            })
+        return jsonify(merged_data), 200
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"msg": "Something went Wrong"}), 500
