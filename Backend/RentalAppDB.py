@@ -195,10 +195,10 @@ class RentalAppDB:
                     base_query += " AND pin_code = %s"
                     query_params.append(filters['Pin_Code'])
 
-                if 'accomodation' in filters:
-                    base_query += " AND accomodation = %s"
-                    query_params.append(filters['accomodation'])
-                
+                if 'accommodation' in filters:
+                    for accomo in filters['accommodation']:
+                        base_query += " AND accommodation = %s"
+                        query_params.append(accomo)  
                 cursor.execute(base_query, query_params)
                 return cursor.fetchall()
         except psycopg2.Error as e:
