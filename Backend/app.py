@@ -303,18 +303,28 @@ def getproperty():
     
 
 
-@app.route("/deleteproperty",methods=["POST"])
+@app.route("/deleteproperty", methods=["POST"])
 @jwt_required()
 def deleteproperty():
     data = request.get_json()
     property_id = data.get("property_id")
-    try:
-        propertydetails = db.delete_property(property_id)
-        return jsonify(msg=propertydetails), 200
-    except Exception as e:
-       print(f"error: {e}")
-       return jsonify({"msg": "Error"}), 500
     
+    if not property_id:
+        return jsonify({"msg": "Property ID is required"}), 400
+    
+    try:
+        # Assuming the db.delete_property function returns None if property is not found
+        propertydetails = db.delete_property(property_id)
+        
+        if propertydetails is None:
+            return jsonify({"msg": "Property not found"}), 404
+        
+        return jsonify(msg=propertydetails), 200
+    
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"msg": f"Error: {str(e)}"}), 500
+
 
 
 reset_tokens = {}
