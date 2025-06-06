@@ -419,6 +419,15 @@ def adminlogin():
         return render_template('dashboard.html')
     else:
         return render_template('loginpage.html')
+    
+@app.route('/allusers', methods=['POST','GET'])
+def allusers():
+    return render_template('user.html')
+    
+    
+@app.route('/allproperties', methods=['POST','GET'])
+def allproperties():
+    return render_template('propertypage.html')
 
 
     
