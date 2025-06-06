@@ -416,7 +416,7 @@ def search_property():
 @app.route('/adminlogin', methods=['POST','GET'])
 def adminlogin():
     if request.method=='POST':
-        return render_template('home.html')
+        return render_template('Homepage.html')
     else:
         return render_template('loginpage.html')
     
