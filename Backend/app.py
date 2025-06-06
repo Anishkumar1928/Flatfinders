@@ -413,8 +413,12 @@ def search_property():
         print(f"Error: {e}")
         return jsonify({"msg": "Something went Wrong"}), 500
     
-
-    
+@app.route('/adminlogin', methods=['POST','GET'])
+def adminlogin():
+    if request.method=='POST':
+        return render_template('dashboard.html')
+    else:
+        return render_template('loginpage.html')
 
 
     

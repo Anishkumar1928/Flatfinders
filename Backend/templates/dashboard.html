@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flat Finder Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom fade/slide-in animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fadeInUp {
+      animation: fadeInUp 0.6s ease-out both;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="w-6 h-6 bg-black rounded-sm animate-spin"></div>
+      <span class="font-bold text-xl text-gray-800 tracking-wide">Flat Finder</span>
+    </div>
+    <div class="flex items-center gap-6 text-sm font-medium text-gray-700">
+      <a href="#" class="hover:text-blue-600 transition">Users</a>
+      <a href="#" class="hover:text-blue-600 transition">Properties</a>
+      <a href="#" class="hover:text-blue-600 transition">Rentals</a>
+      <a href="#" class="hover:text-blue-600 transition">Payments</a>
+      <a href="#" class="hover:text-blue-600 transition">Settings</a>
+      <img src="https://i.pravatar.cc/30" class="w-9 h-9 rounded-full border-2 border-blue-500" alt="User Avatar">
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="p-8">
+    <h1 class="text-3xl font-bold mb-8 animate-fadeInUp">Dashboard</h1>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div class="bg-white shadow-lg p-6 rounded-xl transition hover:scale-105 duration-300 animate-fadeInUp">
+        <p class="text-sm text-gray-500">Total Users</p>
+        <p class="text-3xl font-bold text-blue-600 mt-1">1,234</p>
+      </div>
+      <div class="bg-white shadow-lg p-6 rounded-xl transition hover:scale-105 duration-300 animate-fadeInUp delay-100">
+        <p class="text-sm text-gray-500">Properties Listed</p>
+        <p class="text-3xl font-bold text-green-600 mt-1">567</p>
+      </div>
+      <div class="bg-white shadow-lg p-6 rounded-xl transition hover:scale-105 duration-300 animate-fadeInUp delay-200">
+        <p class="text-sm text-gray-500">Pending Approvals</p>
+        <p class="text-3xl font-bold text-yellow-500 mt-1">34</p>
+      </div>
+      <div class="bg-white shadow-lg p-6 rounded-xl transition hover:scale-105 duration-300 animate-fadeInUp delay-300">
+        <p class="text-sm text-gray-500">Active Rentals</p>
+        <p class="text-3xl font-bold text-purple-600 mt-1">123</p>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <section class="animate-fadeInUp delay-300">
+      <h2 class="text-2xl font-semibold mb-4">Recent Activity</h2>
+      <ul class="space-y-5">
+        <li class="flex items-start gap-4">
+          <span class="text-xl text-blue-500">👤</span>
+          <div>
+            <p class="font-medium">New User Signup</p>
+            <p class="text-sm text-gray-600">Sophia Clark signed up</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-4">
+          <span class="text-xl text-green-500">🏠</span>
+          <div>
+            <p class="font-medium">Property Approved</p>
+            <p class="text-sm text-gray-600">Cozy Apartment approved</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-4">
+          <span class="text-xl text-blue-500">👤</span>
+          <div>
+            <p class="font-medium">New User Signup</p>
+            <p class="text-sm text-gray-600">Ethan Carter signed up</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-4">
+          <span class="text-xl text-green-500">🏠</span>
+          <div>
+            <p class="font-medium">Property Approved</p>
+            <p class="text-sm text-gray-600">Modern House approved</p>
+          </div>
+        </li>
+        <li class="flex items-start gap-4">
+          <span class="text-xl text-blue-500">👤</span>
+          <div>
+            <p class="font-medium">New User Signup</p>
+            <p class="text-sm text-gray-600">Olivia Bennett signed up</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

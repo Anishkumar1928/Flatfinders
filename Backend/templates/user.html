@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flat Finder - Users</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans relative">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="w-6 h-6 bg-black rounded-sm animate-spin-slow"></div>
+      <span class="font-bold text-xl">Flat Finder</span>
+    </div>
+    <div class="flex items-center gap-6 text-sm font-medium text-gray-700">
+      <a href="#" class="hover:text-blue-600 transition">Dashboard</a>
+      <a href="#" class="hover:text-blue-600 transition">Listings</a>
+      <a href="#" class="hover:text-blue-600 transition">Users</a>
+      <a href="#" class="hover:text-blue-600 transition">Reports</a>
+      <input type="text" placeholder="Search" class="px-3 py-1.5 rounded-md border text-sm border-gray-300 focus:outline-none focus:ring focus:ring-blue-200" />
+      <img src="https://i.pravatar.cc/30" class="w-9 h-9 rounded-full border-2 border-blue-500" alt="User Avatar">
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="p-8">
+    <h1 class="text-3xl font-bold mb-2">Users</h1>
+    <p class="text-gray-600 mb-6">Manage all users of the platform</p>
+
+    <!-- Table -->
+    <div class="bg-white shadow rounded-lg overflow-x-auto">
+      <table class="min-w-full text-sm text-left">
+        <thead class="bg-gray-100 border-b">
+          <tr>
+            <th class="px-6 py-3 font-semibold text-gray-700">User</th>
+            <th class="px-6 py-3 font-semibold text-gray-700">Email</th>
+            <th class="px-6 py-3 font-semibold text-gray-700">Role</th>
+            <th class="px-6 py-3 font-semibold text-gray-700">Status</th>
+            <th class="px-6 py-3 font-semibold text-gray-700">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr class="hover:bg-blue-50 transition duration-200 ease-in-out">
+            <td class="px-6 py-4 font-medium">Sophia Clark</td>
+            <td class="px-6 py-4 text-gray-500">sophia@example.com</td>
+            <td class="px-6 py-4"><span class="bg-gray-200 px-3 py-1 rounded-full font-semibold">Admin</span></td>
+            <td class="px-6 py-4"><span class="text-green-600 font-semibold">Active</span></td>
+            <td class="px-6 py-4">
+              <button onclick="openPopup('Sophia Clark', 'sophia@example.com', 'Admin', 'Active')" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full transition text-xs font-medium">View User</button>
+              <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full transition text-xs font-medium ml-2">Delete User</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Popover Background -->
+  <div id="popupOverlay" class="fixed inset-0 bg-black bg-opacity-50 opacity-0 invisible transition-opacity duration-300 z-40"></div>
+
+  <!-- Popover Card -->
+  <div id="userPopup" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-95 opacity-0 invisible transition-all duration-300 w-[320px] bg-white rounded-lg shadow-lg p-6 z-50">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold">User Details</h2>
+      <button onclick="closePopup()" class="text-gray-500 hover:text-red-500 text-lg">&times;</button>
+    </div>
+    <div class="space-y-2 text-sm">
+      <p><strong>Name:</strong> <span id="popupName"></span></p>
+      <p><strong>Email:</strong> <span id="popupEmail"></span></p>
+      <p><strong>Role:</strong> <span id="popupRole"></span></p>
+      <p><strong>Status:</strong> <span id="popupStatus"></span></p>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    function openPopup(name, email, role, status) {
+      document.getElementById('popupName').innerText = name;
+      document.getElementById('popupEmail').innerText = email;
+      document.getElementById('popupRole').innerText = role;
+      document.getElementById('popupStatus').innerText = status;
+
+      const overlay = document.getElementById('popupOverlay');
+      const popup = document.getElementById('userPopup');
+
+      overlay.classList.remove('invisible', 'opacity-0');
+      overlay.classList.add('opacity-100');
+
+      popup.classList.remove('invisible', 'opacity-0', 'scale-95');
+      popup.classList.add('opacity-100', 'scale-100');
+    }
+
+    function closePopup() {
+      const overlay = document.getElementById('popupOverlay');
+      const popup = document.getElementById('userPopup');
+
+      overlay.classList.remove('opacity-100');
+      overlay.classList.add('opacity-0');
+
+      popup.classList.remove('opacity-100', 'scale-100');
+      popup.classList.add('opacity-0', 'scale-95');
+
+      setTimeout(() => {
+        overlay.classList.add('invisible');
+        popup.classList.add('invisible');
+      }, 300);
+    }
+
+    document.getElementById('popupOverlay').addEventListener('click', closePopup);
+  </script>
+</body>
+</html>

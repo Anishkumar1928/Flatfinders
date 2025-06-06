@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flat Finder - Property Listings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans relative">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="w-6 h-6 bg-black rounded-sm animate-spin-slow"></div>
+      <span class="font-bold text-xl">Flat Finder</span>
+    </div>
+    <div class="flex items-center gap-6 text-sm font-medium text-gray-700">
+      <a href="#" class="hover:text-blue-600 transition">Dashboard</a>
+      <a href="#" class="hover:text-blue-600 transition">Listings</a>
+      <a href="#" class="hover:text-blue-600 transition">Users</a>
+      <a href="#" class="hover:text-blue-600 transition">Reports</a>
+      <input type="text" placeholder="Search" class="px-3 py-1.5 rounded-md border text-sm border-gray-300 focus:outline-none focus:ring focus:ring-blue-200" />
+      <img src="https://i.pravatar.cc/30" class="w-9 h-9 rounded-full border-2 border-blue-500" alt="User Avatar">
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="p-8">
+    <h1 class="text-3xl font-bold mb-2">Property Listings</h1>
+    <p class="text-gray-600 mb-6">Manage all property listings, including viewing, editing, deleting, and approving new submissions.</p>
+
+    <!-- Table -->
+    <div class="bg-white shadow rounded-lg overflow-x-auto">
+      <table class="min-w-full text-sm text-left">
+        <thead class="bg-gray-100 border-b">
+          <tr>
+            <th class="px-6 py-3 font-semibold text-gray-700">Listing ID</th>
+            <th class="px-6 py-3 font-semibold text-gray-700">Address</th>
+            <th class="px-6 py-3 font-semibold text-gray-700">Owner</th>
+            <th class="px-6 py-3 font-semibold text-gray-700">Status</th>
+            <th class="px-6 py-3 font-semibold text-gray-700">Price</th>
+            <th class="px-6 py-3 font-semibold text-gray-700">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr class="hover:bg-blue-50 transition duration-200 ease-in-out">
+            <td class="px-6 py-4 font-medium">#12345</td>
+            <td class="px-6 py-4">123 Maple Street, Anytown</td>
+            <td class="px-6 py-4">Sarah Johnson</td>
+            <td class="px-6 py-4"><span class="bg-green-100 text-green-800 px-3 py-1 rounded-full font-semibold text-xs">Approved</span></td>
+            <td class="px-6 py-4">$1,500</td>
+            <td class="px-6 py-4">
+              <button onclick="openPopup('123 Maple Street, Anytown', 'Sarah Johnson', 'Approved', '$1,500')" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-medium">View</button>
+
+              <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full text-xs font-medium ml-2">Delete</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-blue-50 transition duration-200 ease-in-out">
+            <td class="px-6 py-4 font-medium">#12346</td>
+            <td class="px-6 py-4">456 Oak Avenue, Anytown</td>
+            <td class="px-6 py-4">Michael Brown</td>
+            <td class="px-6 py-4"><span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full font-semibold text-xs">Pending</span></td>
+            <td class="px-6 py-4">$1,200</td>
+            <td class="px-6 py-4">
+              <button onclick="openPopup('456 Oak Avenue, Anytown', 'Michael Brown', 'Pending', '$1,200')" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-medium">View</button>
+
+              <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full text-xs font-medium ml-2">Delete</button>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Popover Background -->
+  <div id="popupOverlay" class="fixed inset-0 bg-black bg-opacity-50 opacity-0 invisible transition-opacity duration-300 z-40"></div>
+
+  <!-- Popover Card -->
+  <div id="popupCard" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-95 opacity-0 invisible transition-all duration-300 w-[350px] bg-white rounded-lg shadow-lg p-6 z-50">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold">Property Details</h2>
+      <button onclick="closePopup()" class="text-gray-500 hover:text-red-500 text-lg">&times;</button>
+    </div>
+    <div class="space-y-2 text-sm">
+      <p><strong>Address:</strong> <span id="popupAddress"></span></p>
+      <p><strong>Owner:</strong> <span id="popupOwner"></span></p>
+      <p><strong>Status:</strong> <span id="popupStatus"></span></p>
+      <p><strong>Price:</strong> <span id="popupPrice"></span></p>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    function openPopup(address, owner, status, price) {
+      document.getElementById('popupAddress').innerText = address;
+      document.getElementById('popupOwner').innerText = owner;
+      document.getElementById('popupStatus').innerText = status;
+      document.getElementById('popupPrice').innerText = price;
+
+      const overlay = document.getElementById('popupOverlay');
+      const card = document.getElementById('popupCard');
+
+      overlay.classList.remove('invisible', 'opacity-0');
+      overlay.classList.add('opacity-100');
+
+      card.classList.remove('invisible', 'opacity-0', 'scale-95');
+      card.classList.add('opacity-100', 'scale-100');
+    }
+
+    function closePopup() {
+      const overlay = document.getElementById('popupOverlay');
+      const card = document.getElementById('popupCard');
+
+      overlay.classList.remove('opacity-100');
+      overlay.classList.add('opacity-0');
+
+      card.classList.remove('opacity-100', 'scale-100');
+      card.classList.add('opacity-0', 'scale-95');
+
+      setTimeout(() => {
+        overlay.classList.add('invisible');
+        card.classList.add('invisible');
+      }, 300);
+    }
+
+    document.getElementById('popupOverlay').addEventListener('click', closePopup);
+  </script>
+</body>
+</html>
