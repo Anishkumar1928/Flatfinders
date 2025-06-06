@@ -1,4 +1,45 @@
-<main class="p-8" id="main">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flat Finder Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom fade/slide-in animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fadeInUp {
+      animation: fadeInUp 0.6s ease-out both;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="w-6 h-6 bg-black rounded-sm animate-spin"></div>
+      <span class="font-bold text-xl text-gray-800 tracking-wide">Flat Finder</span>
+    </div>
+    <div class="flex items-center gap-6 text-sm font-medium text-gray-700">
+      <a  href="/allusers" hx-get="/allusers" hx-target="#main" hx-swap="innerHTML">Users</a>
+      <a  href="/dashboard" hx-get="/dashboard" hx-target="#main" hx-swap="innerHTML">Users</a>
+      <a href="/allproperties" hx-get="/allproperties" hx-target="#main" hx-swap="innerHTML" class="hover:text-blue-600 transition">Properties</a>
+      <img src="https://i.pravatar.cc/30" class="w-9 h-9 rounded-full border-2 border-blue-500" alt="User Avatar">
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="p-8" id="main">
     <h1 class="text-3xl font-bold mb-8 animate-fadeInUp">Dashboard</h1>
 
     <!-- Stats Cards -->
@@ -63,3 +104,6 @@
       </ul>
     </section>
   </main>
+  <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+</body>
+</html>

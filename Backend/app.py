@@ -416,7 +416,7 @@ def search_property():
 @app.route('/adminlogin', methods=['POST','GET'])
 def adminlogin():
     if request.method=='POST':
-        return render_template('dashboard.html')
+        return render_template('home.html')
     else:
         return render_template('loginpage.html')
     
@@ -428,6 +428,10 @@ def allusers():
 @app.route('/allproperties', methods=['POST','GET'])
 def allproperties():
     return render_template('propertypage.html')
+
+@app.route('/dashboard', methods=['POST','GET'])
+def dashboard():
+    return render_template('dashboard.html')
 
 
     
