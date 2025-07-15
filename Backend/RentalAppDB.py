@@ -8,7 +8,7 @@ class RentalAppDB:
         # PostgreSQL connection string
         self.connection_string = os.getenv("POSTGRESQL_DATABASE_URL")
         self.connection = psycopg2.connect(self.connection_string)
-   
+     
     # User CRUD Operations
     def create_user(self, name, mobile, email, password, gender, role):
         try:
